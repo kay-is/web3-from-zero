@@ -1,0 +1,13 @@
+<!doctype html>
+
+<title>00 Block Number - Web3 From Zero</title>
+
+<script type="module">
+  import { ethers } from "https://cdn.ethers.io/lib/ethers-5.2.esm.min.js"
+  
+  const provider = ethers.getDefaultProvider()
+
+  const block = await provider.getBlock(100004)
+  
+  console.log(block)
+</script>
