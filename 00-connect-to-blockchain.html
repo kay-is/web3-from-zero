@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+
+<title>00 Connect to the Blockchain - Web3 From Zero</title>
+<h1>00 Connect to the Blockchain</h1>
+
+<p>The ethers.js library is used to connect to the Ethereum blockchain.</p>
+
+<pre>
+import { ethers } from "https://cdn.ethers.io/lib/ethers-5.2.esm.min.js"</pre
+>
+
+<p>
+  The default provider can connect to the chain in multiple ways. It tries to
+  use a global ethereum object, injected by a wallet extension, if this object
+  doesn't exists it uses a fallback HTTP gateway. This gateway is publicly
+  accessible, but heavily rate limited.
+</p>
+<pre>
+  const provider = ethers.getDefaultProvider()
+</pre>
+
+<p>
+  To check if the connection works, we will read a block from the chain add
+  display the block's data in a pre-formatted HTML element.
+</p>
+<pre>
+  const block = await provider.getBlock(100004)
+  const pre = document.querySelector("#target")
+  pre.innerText = JSON.stringify(block, null, 2)
+</pre>
+
+<h2>Block Number 100004</h2>
+
+<pre id="target">Loading...</pre>
+
+Next Lesson: <a href="/01-read-account-balance.html">01 Read Account Balance</a>
+
+<script type="module">
+  import { ethers } from "https://cdn.ethers.io/lib/ethers-5.2.esm.min.js"
+
+  const provider = ethers.getDefaultProvider()
+  const block = await provider.getBlock(100004)
+
+  const pre = document.querySelector("#target")
+  pre.innerText = JSON.stringify(block, null, 2)
+</script>
+
+<!-- Styling Boilerplate -->
+<link rel="stylesheet" href="//unpkg.com/bamboo.css@1.3.7/dist/dark.min.css" />
+<link
+  rel="stylesheet"
+  href="//unpkg.com/@highlightjs/cdn-assets@11.3.1/styles/default.min.css"
+/>
+<script src="//unpkg.com/@highlightjs/cdn-assets@11.3.1/highlight.min.js"></script>
+<script>
+  document.addEventListener("DOMContentLoaded", () =>
+    document.querySelectorAll("pre").forEach((el) => hljs.highlightElement(el))
+  )
+</script>

@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+
+<title>01 Read an Address Balance - Web3 From Zero</title>
+<h1>01 Read an Address Balance</h1>
+
+<p>
+  An address can point to an external account or a smart contract, both can have
+  a balance of Ether, the native currency of the Ethereum network. An account is
+  usually controlled by a user, and a smart contract is an application running
+  on the blockchain.
+</p>
+<p>
+  We can read this data from the chain with the help of an ethers.js provider.
+</p>
+<pre>
+  const provider = ethers.getDefaultProvider()
+  const balance = await provider.getBalance(
+    "0xdd00Cc906B93419814443Bb913949d503B3DF3c4"
+  )
+</pre>
+
+<p>
+  Ethers.js packaged the balance with the <code>BigNumber</code> type, because
+  the value is too big for JavaScript's number type. We have to convert the
+  balance to a string with the right amount of decimal points to display it in a
+  human readable way.
+</p>
+
+<p>
+  For this conversion, we can use the utility functions ethers.js includes. The
+  <code>formatUnits</code> function will automatically try to convert a
+  <code>BigNumber</code> to an <code>string</code> with the right decimal
+  points.
+</p>
+
+<pre>
+  pre.innerText = ethers.utils.formatUnits(balance) + " ETH"
+</pre>
+
+<h2>Balance of address 0xdd00Cc906B...</h2>
+
+<pre id="target1">Loading...</pre>
+
+<h2>Using ENS</h2>
+
+<p>
+  To make access of addresses easier, ethers.js also works with the Ethereum
+  Name Service, or short ENS. It's like DNS, but for Ethereum chain addresses
+  instead of IPs.
+</p>
+
+<blockquote>
+  Keep in mind, if you use an address, the target account or smart contract
+  always stays the same. This isn't the case for ENS domains, they resolve to
+  different addresses, and in turn accounts or smart contracts, over time.
+</blockquote>
+
+<p>
+  The ENS domain <code>devdao.eth</code> points to the address we used above, so
+  if we replace the address with the domain in our call, we will get the same
+  result.
+</p>
+
+<pre>
+  const balance = await provider.getBalance("devdao.eth")
+</pre>
+
+<h2>Balance of address devdao.eth</h2>
+
+<pre id="target2">Loading...</pre>
+
+<p>
+  Previous Lesson:
+  <a href="00-connect-to-blockchain.html">00 Connect to the Blockchain</a>
+</p>
+<p>
+  Next Lesson:
+  <a href="00-connect-to-blockchain.html">02 ...</a>
+</p>
+
+<script type="module">
+  import { ethers } from "https://cdn.ethers.io/lib/ethers-5.2.esm.min.js"
+
+  const provider = ethers.getDefaultProvider()
+  {
+    const balance = await provider.getBalance(
+      "0xdd00Cc906B93419814443Bb913949d503B3DF3c4"
+    )
+
+    const pre = document.querySelector("#target1")
+    pre.innerText = ethers.utils.formatUnits(balance) + " ETH"
+  }
+
+  {
+    const balance = await provider.getBalance("devdao.eth")
+
+    const pre = document.querySelector("#target2")
+    pre.innerText = ethers.utils.formatUnits(balance) + " ETH"
+  }
+</script>
+
+<!-- Styling Boilerplate -->
+<link rel="stylesheet" href="//unpkg.com/bamboo.css@1.3.7/dist/dark.min.css" />
+<link
+  rel="stylesheet"
+  href="//unpkg.com/@highlightjs/cdn-assets@11.3.1/styles/default.min.css"
+/>
+<script src="//unpkg.com/@highlightjs/cdn-assets@11.3.1/highlight.min.js"></script>
+<script>
+  document.addEventListener("DOMContentLoaded", () =>
+    document.querySelectorAll("pre").forEach((el) => hljs.highlightElement(el))
+  )
+</script>
