@@ -8,5 +8,6 @@ This is the Ethereum edition, which uses the Ethereum network as an example.
 
 ### Lessons
 
-- [00 Connect to the Blockchain](https://kay-is.github.io/web3-from-zero/00-connect-to-blockchain.html) - ([Code](00-connect-to-blockchain.html))
-- [01 React an Address Data](https://kay-is.github.io/web3-from-zero/01-read-address-data.html) - ([Code](01-read-address-data.html))
+- [00 Connecting to the Blockchain](https://kay-is.github.io/web3-from-zero/00-connect-to-blockchain.html) - ([Code](00-connect-to-blockchain.html))
+- [01 Reading an Address Data](https://kay-is.github.io/web3-from-zero/01-read-address-data.html) - ([Code](01-read-address-data.html))
+- [02 Using the Ethereum Name Service](https://kay-is.github.io/web3-from-zero/02-using-ens.html) - ([Code](02-using-ens.html))
