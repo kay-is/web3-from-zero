@@ -1,0 +1,23 @@
+{
+  "name": "web3-from-zero",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "http-server -c-1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kay-is/web3-from-zero.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/kay-is/web3-from-zero/issues"
+  },
+  "homepage": "https://github.com/kay-is/web3-from-zero#readme",
+  "devDependencies": {
+    "http-server": "^14.0.0"
+  }
+}
