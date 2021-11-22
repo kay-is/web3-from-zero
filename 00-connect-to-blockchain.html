@@ -6,7 +6,7 @@
 <p>The ethers.js library is used to connect to the Ethereum blockchain.</p>
 
 <pre>
-import { ethers } from "https://cdn.ethers.io/lib/ethers-5.2.esm.min.js"</pre
+import {ethers} from "//unpkg.com/ethers@5.5.1/dist/ethers.esm.min.js"</pre
 >
 
 <p>
@@ -33,10 +33,10 @@ import { ethers } from "https://cdn.ethers.io/lib/ethers-5.2.esm.min.js"</pre
 
 <pre id="target">Loading...</pre>
 
-Next Lesson: <a href="01-read-address-balance.html">01 Read Address Balance</a>
+<a href="01-read-address-data.html">01 Reading Address Data >></a>
 
 <script type="module">
-  import { ethers } from "https://cdn.ethers.io/lib/ethers-5.2.esm.min.js"
+  import { ethers } from "//unpkg.com/ethers@5.5.1/dist/ethers.esm.min.js"
 
   const provider = ethers.getDefaultProvider()
   const block = await provider.getBlock(100004)

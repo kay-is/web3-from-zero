@@ -1,16 +1,18 @@
 <!DOCTYPE html>
 
-<title>01 Read an Address Balance - Web3 From Zero</title>
-<h1>01 Read an Address Balance</h1>
+<title>01 Reading Address Data - Web3 From Zero</title>
+<h1>01 Reading Address Data</h1>
 
 <p>
-  An address can point to an external account or a smart contract, both can have
-  a balance of Ether, the native currency of the Ethereum network. An account is
-  usually controlled by a user, and a smart contract is an application running
-  on the blockchain.
+  An address can point to an account or a smart contract, both can have a
+  balance of Ether, the native currency of the Ethereum network. An account is
+  usually directly controlled by a user, a smart contract is an application
+  running autonomously on the blockchain.
 </p>
 <p>
-  We can read this data from the chain with the help of an ethers.js provider.
+  We can read data stored at that address on the chain with the help of an
+  ethers.js provider. Using the <code>getBalance</code> function, we can read
+  the Ether balance of an address.
 </p>
 <pre>
   const provider = ethers.getDefaultProvider()
@@ -41,45 +43,29 @@
 
 <pre id="target1">Loading...</pre>
 
-<h2>Using ENS</h2>
-
 <p>
-  To make access of addresses easier, ethers.js also works with the Ethereum
-  Name Service, or short ENS. It's like DNS, but for Ethereum chain addresses
-  instead of IPs.
-</p>
-
-<blockquote>
-  Keep in mind, if you use an address, the target account or smart contract
-  always stays the same. This isn't the case for ENS domains, they resolve to
-  different addresses, and in turn accounts or smart contracts, over time.
-</blockquote>
-
-<p>
-  The ENS domain <code>devdao.eth</code> points to the address we used above, so
-  if we replace the address with the domain in our call, we will get the same
-  result.
+  Antoher information we can get from an address is its transaction count. We
+  can use this count to keep track of an accounts activities.
 </p>
 
 <pre>
-  const balance = await provider.getBalance("devdao.eth")
+  const transactionCount = await provider.getTransactionCount(
+    "0xdd00Cc906B93419814443Bb913949d503B3DF3c4"
+  )
 </pre>
 
-<h2>Balance of address devdao.eth</h2>
+<h2>Transaction count of address 0xdd00Cc906B...</h2>
 
 <pre id="target2">Loading...</pre>
 
-<p>
-  Previous Lesson:
-  <a href="00-connect-to-blockchain.html">00 Connect to the Blockchain</a>
-</p>
-<p>
-  Next Lesson:
-  <a href="00-connect-to-blockchain.html">02 ...</a>
-</p>
+<div>
+  <a href="00-connect-to-blockchain.html"><< 00 Connect to the Blockchain</a>
+  -
+  <a href="02-using-ens.html">02 Using the Ethereum Name Service >></a>
+</div>
 
 <script type="module">
-  import { ethers } from "https://cdn.ethers.io/lib/ethers-5.2.esm.min.js"
+  import { ethers } from "//unpkg.com/ethers@5.5.1/dist/ethers.esm.min.js"
 
   const provider = ethers.getDefaultProvider()
   {
@@ -92,10 +78,12 @@
   }
 
   {
-    const balance = await provider.getBalance("devdao.eth")
+    const transactionCount = await provider.getTransactionCount(
+      "0xdd00Cc906B93419814443Bb913949d503B3DF3c4"
+    )
 
     const pre = document.querySelector("#target2")
-    pre.innerText = ethers.utils.formatUnits(balance) + " ETH"
+    pre.innerText = transactionCount
   }
 </script>
 
