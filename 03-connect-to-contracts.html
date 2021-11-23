@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+
+<title>03 Connecting to Smart Contracts - Web3 From Zero</title>
+<h1>03 Connecting to Smart Contracts</h1>
+
+<p>
+  Smart contracts are the main feature that distinguishes Ethereum from Bitcoin.
+  A smart contract is a program running on the Ethereum network, and it can
+  access the blockchain data. Smart contracts are written in Solidity, but we
+  won't go into smart contract implementation details yet.
+</p>
+<p>To access a smart contract, we need three things:</p>
+<ol>
+  <li>The address or an ENS domain that points to the smart contract.</li>
+  <li>
+    The full or partial Application Binary Interface (ABI) of the contract
+  </li>
+  <li>A provider that is connected to the Ethereum network</li>
+</ol>
+<p>
+  Every account or smart contract has an address, this is how we know where on
+  the blockchain it is stored. To make things easier, creators of a smart
+  contract can also use an ENS domain for their address, just like with IPs and
+  DNS.
+</p>
+<pre>
+  const address = "0x25ed58c027921E14D86380eA2646E3a1B5C55A8b"
+</pre>
+<p>
+  Smart contracts are written in Solidity, which is a compiled language. Like
+  Java gets compiled to a bytecode that runs in a virtual machine. In this case,
+  it's called the Ethereum Virtual Machine, or EVM.
+</p>
+<p>
+  To figure out what functions a contract has to offer, we need an ABI, a list
+  of function signatures of functions we want to call later. The ABI is used by
+  ethers.js to figure out what arguments a function expects and what values it
+  returned when it finished its work.
+</p>
+<p>
+  When using ethers.js, we can define the ABI as an array of strings, where the
+  strings are Solidity function signatures. Here is an example of an ABI for one
+  function:
+</p>
+<pre>
+  const abi = [
+    "function ownerOf(uint256 tokenId) external view returns (address owner)",
+  ]
+</pre>
+<p>
+  Functions get defined with the <code>function</code> keyword followed by a
+  name and then the arguments in paratheses. Solidity is statically typed and
+  doesn't support floating points but a mass of integer types.
+</p>
+
+<p>
+  In the example above the function takes one argument of type
+  <code>uint256</code> and it's named <code>tokenId</code>.
+</p>
+
+<p>
+  The <code>external</code> keyword is an access modifier that marks the
+  function as callable outside the contract. This is important because we want
+  to do precisely that.
+</p>
+
+<p>
+  The <code>view</code> keyword is crucial too because it tells the EVM that the
+  function won't modify any on-chain state; it will just read it. This enables
+  us to call it without having a wallet!
+</p>
+<p>
+  The <code>returns</code> keyword tells is what we get back when we call the
+  function. In this case, it's the address of the owner of a token.
+</p>
+
+<p>
+  That's it; we told ethers.js where the contract is located and that it has a
+  specific function. The next step is to instantiate the contract and call the
+  function!
+</p>
+
+<pre>
+  const smartContract = new ethers.Contract(address, abi, provider)
+  const owner = await smartContract.ownerOf(2)
+</pre>
+
+<p>Since the return value is an address</p>
+
+<h2>Owner of token #2</h2>
+<pre id="target"></pre>
+
+<div>
+  <a href="02-using-ens.html"><< 02 Using the Ethereum Name Service</a>
+  -
+  <a href="#">04 ... >></a>
+</div>
+
+<script type="module">
+  import { ethers } from "//unpkg.com/ethers@5.5.1/dist/ethers.esm.min.js"
+
+  const provider = ethers.getDefaultProvider()
+
+  const address = "0x25ed58c027921E14D86380eA2646E3a1B5C55A8b"
+  const abi = [
+    "function ownerOf(uint256 tokenId) external view returns (address owner)",
+  ]
+
+  const smartContract = new ethers.Contract(address, abi, provider)
+
+  const owner = await smartContract.ownerOf(2)
+
+  console.log(owner)
+
+  const pre = document.querySelector("#target")
+  pre.innerText = owner
+</script>
+
+<!-- Styling Boilerplate -->
+<link rel="stylesheet" href="//unpkg.com/bamboo.css@1.3.7/dist/dark.min.css" />
+<link
+  rel="stylesheet"
+  href="//unpkg.com/@highlightjs/cdn-assets@11.3.1/styles/default.min.css"
+/>
+<script src="//unpkg.com/@highlightjs/cdn-assets@11.3.1/highlight.min.js"></script>
+<script>
+  document.addEventListener("DOMContentLoaded", () =>
+    document.querySelectorAll("pre").forEach((el) => hljs.highlightElement(el))
+  )
+</script>
