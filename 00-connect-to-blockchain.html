@@ -3,7 +3,20 @@
 <title>00 Connect to the Blockchain - Web3 From Zero</title>
 <h1>00 Connect to the Blockchain</h1>
 
-<p>The ethers.js library is used to connect to the Ethereum blockchain.</p>
+<p>
+  The ethers.js library is used to connect to the Ethereum blockchain. It can
+  connect directly via an HTTP gateway, or via a Ethereum wallet. In the first
+  lessons we will use the the direct method.
+</p>
+
+<p></p>
+
+<figure>
+  <img src="images/blockchain-connection.png" />
+  <figcaption>
+    Figure 1: Blockchain connection with and without a wallet
+  </figcaption>
+</figure>
 
 <pre>
 import {ethers} from "//unpkg.com/ethers@5.5.1/dist/ethers.esm.min.js"</pre
@@ -47,6 +60,12 @@ import {ethers} from "//unpkg.com/ethers@5.5.1/dist/ethers.esm.min.js"</pre
 
 <!-- Styling Boilerplate -->
 <link rel="stylesheet" href="//unpkg.com/bamboo.css@1.3.7/dist/dark.min.css" />
+<style>
+  figcaption {
+    text-align: center;
+    font-size: smaller;
+  }
+</style>
 <link
   rel="stylesheet"
   href="//unpkg.com/@highlightjs/cdn-assets@11.3.1/styles/default.min.css"
