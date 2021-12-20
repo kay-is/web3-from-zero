@@ -1,6 +1,11 @@
 <!DOCTYPE html>
 
+<link rel="stylesheet" href="boilerplate/style.css" />
+<script src="//unpkg.com/@highlightjs/cdn-assets@11.3.1/highlight.min.js"></script>
+<script type="module" src="boilerplate/editor.js"></script>
+
 <title>00 Connect to the Blockchain - Web3 From Zero</title>
+
 <h1>00 Connect to the Blockchain</h1>
 
 <p>
@@ -8,8 +13,6 @@
   connect directly via an HTTP gateway, or via a Ethereum wallet. In the first
   lessons we will use the the direct method.
 </p>
-
-<p></p>
 
 <figure>
   <img src="images/blockchain-connection.png" />
@@ -19,60 +22,32 @@
 </figure>
 
 <pre>
-import {ethers} from "//unpkg.com/ethers@5.5.1/dist/ethers.esm.min.js"</pre
->
-
-<p>
-  The default provider can connect to the chain in multiple ways. It tries to
-  use a global ethereum object, injected by a wallet extension, if this object
-  doesn't exists it uses a fallback HTTP gateway. This gateway is publicly
-  accessible, but heavily rate limited.
-</p>
-<pre>
-  const provider = ethers.getDefaultProvider()
+import {ethers} from "//unpkg.com/ethers@5.5.1/dist/ethers.esm.min.js"
 </pre>
 
 <p>
-  To check if the connection works, we will read a block from the chain add
-  display the block's data in a pre-formatted HTML element.
+The default provider can connect to the chain in multiple ways. It tries to
+use a global ethereum object, injected by a wallet extension, if this object
+doesn't exists it uses a fallback HTTP gateway. This gateway is publicly
+accessible, but heavily rate limited.
 </p>
-<pre>
-  const block = await provider.getBlock(100004)
-  const pre = document.querySelector("#target")
-  pre.innerText = JSON.stringify(block, null, 2)
-</pre>
 
-<h2>Block Number 100004</h2>
+<code-editor>
+  // Editable!
+const provider = ethers.getDefaultProvider()
+print(provider)
+</code-editor>
 
-<pre id="target">Loading...</pre>
+<p>
+To check if the connection works, we will read a block from the chain add
+display the block's data in a pre-formatted HTML element.
+</p>
+
+<code-editor>
+// Editable!
+const provider = ethers.getDefaultProvider()
+const block = await provider.getBlock(100004)
+print(block)
+</code-editor>
 
 <a href="01-read-address-data.html">01 Reading Address Data >></a>
-
-<script type="module">
-  import { ethers } from "//unpkg.com/ethers@5.5.1/dist/ethers.esm.min.js"
-
-  const provider = ethers.getDefaultProvider()
-  const block = await provider.getBlock(100004)
-
-  const pre = document.querySelector("#target")
-  pre.innerText = JSON.stringify(block, null, 2)
-</script>
-
-<!-- Styling Boilerplate -->
-<link rel="stylesheet" href="//unpkg.com/bamboo.css@1.3.7/dist/dark.min.css" />
-<style>
-  figcaption {
-    text-align: center;
-    font-size: smaller;
-  }
-</style>
-<link
-  rel="stylesheet"
-  href="//unpkg.com/@highlightjs/cdn-assets@11.3.1/styles/default.min.css"
-/>
-<script src="//unpkg.com/@highlightjs/cdn-assets@11.3.1/highlight.min.js"></script>
-<script>
-  document.addEventListener("DOMContentLoaded", () =>
-    document.querySelectorAll("pre").forEach((el) => hljs.highlightElement(el))
-  )
-</script>

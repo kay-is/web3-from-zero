@@ -1,0 +1,42 @@
+@import url("//unpkg.com/sakura.css/css/sakura-vader.css");
+@import url("//unpkg.com/@highlightjs/cdn-assets@11.3.1/styles/a11y-dark.min.css");
+
+body {
+  max-width: 80ch;
+}
+
+p {
+  margin-top: 2.5rem;
+}
+
+figure {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+figure > figcaption {
+  text-align: center;
+  font-size: smaller;
+}
+figure > img {
+  margin-bottom: 0.5rem;
+}
+
+button {
+  width: 100%;
+  margin-top: 0;
+  font-size: large;
+  font-weight: bold;
+  height: 50px;
+}
+
+pre {
+  margin-bottom: 0;
+  max-height: 400px;
+  color: grey;
+}
+
+pre > code {
+  color: lightgray;
+  font-size: 1em;
+}
