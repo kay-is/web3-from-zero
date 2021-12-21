@@ -6,19 +6,46 @@ customElements.define(
   "code-editor",
   class CodeEditor extends HTMLElement {
     connectedCallback() {
+      const hintElement = this.querySelector("p")
+      let codeHint = null
+      if (hintElement) {
+        codeHint = hintElement.innerHTML.trim()
+        this.removeChild(hintElement)
+      }
+
       const code = this.innerHTML.trim()
 
       this.innerHTML = `
       <pre><code data-editor-input contenteditable spellcheck="false">${code}</code></pre>
-      <button>Execute</button>
+      <div>
+        <button data-editor-execute>Execute!</button>
+        <button data-editor-hint ${!codeHint ? "disabled" : ""}>Hint?</button>
+      </div>
       <b>Result</b>
       <pre data-editor-result></pre>`
 
-      this.querySelector("button").addEventListener("click", this.executeCode)
+      this.querySelector("[data-editor-execute]").addEventListener(
+        "click",
+        this.executeCode
+      )
+
+      if (hintElement) {
+        let hinted = false
+        this.querySelector("[data-editor-hint]").addEventListener(
+          "click",
+          (e) => {
+            if (hinted) return
+            e.target.parentNode.parentNode.querySelector(
+              "[data-editor-input]"
+            ).innerHTML += "\n" + codeHint
+            hinted = true
+          }
+        )
+      }
     }
 
     executeCode(e) {
-      const parent = e.target.parentNode
+      const parent = e.target.parentNode.parentNode
       const code = parent.querySelector("[data-editor-input]").innerHTML.trim()
       const outputElement = parent.querySelector("[data-editor-result]")
 

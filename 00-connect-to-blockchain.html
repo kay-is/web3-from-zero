@@ -6,48 +6,164 @@
 
 <title>00 Connect to the Blockchain - Web3 From Zero</title>
 
-<h1>00 Connect to the Blockchain</h1>
+<h1>00 - Connect to the Blockchain</h1>
 
 <p>
-  The ethers.js library is used to connect to the Ethereum blockchain. It can
-  connect directly via an HTTP gateway, or via a Ethereum wallet. In the first
-  lessons we will use the the direct method.
+This tutorial will start from zero, which means that the first lessons don't require you to
+install anything. No wallet, no dev environment; you just need your browser and basic JavaScript
+skills.
+</p>
+
+<blockquote>
+<b>Note:</b> If you don't have JavaScript skills yet, because you're just started your developer 
+journey, or because you come from a different programming language, I'd recommend 
+<a href="https://www.freecodecamp.org/learn">FreeCodeCamp</a>. They offer hundreds of hours of 
+JavaScript courses for beginners for free!
+</blockquote>
+
+<h2>Connection Modes</h2>
+
+<p>
+Coming from Web2, you probably know how to load your data from storage into a frontend. You
+connect to some kind of backend via an HTTP API, and this API, in turn, loads data from storage
+like a database.
+</p>
+
+<p>
+The same is true for Web3. If you don't have a crypto wallet, you need some kind of HTTP API to
+connect to a blockchain network. This API is called a gateway. It accepts requests from a browser
+via HTTP and routes them to a blockchain network. This connection mode can only be used to read data
+from a blockchain.
+</p>
+
+<p>
+If you have a crypto wallet, you can make it accessible with a browser extension for a frontend.
+In the case of Ethereum, such an extension will inject a global <code>ethereum</code> object into 
+your frontend that can be used to interact with the wallet. This connection mode can be used to 
+read and write data, like sending transactions.
+</p>
+
+<p>
+If you have a wallet installed and the extension set up, it will connect to the blockchain network 
+via an HTTP gateway, so the browser doesn't have to interact with the gateway directly.
+</p>
+
+<p>
+In Figure 1, you can see the different types of connections—Web2 and Web3 with and without a wallet.
 </p>
 
 <figure>
   <img src="images/blockchain-connection.png" />
   <figcaption>
-    Figure 1: Blockchain connection with and without a wallet
+    Figure 1: Web2 and Web3 backends
   </figcaption>
 </figure>
 
-<pre>
-import {ethers} from "//unpkg.com/ethers@5.5.1/dist/ethers.esm.min.js"
-</pre>
+<p>
+In this tutorial, we will start with the read-only connection mode. You don't have to
+install anything for the first few lessons!
+</p>
+
+<h2>Using Ethers.js</h2>
 
 <p>
-The default provider can connect to the chain in multiple ways. It tries to
-use a global ethereum object, injected by a wallet extension, if this object
-doesn't exists it uses a fallback HTTP gateway. This gateway is publicly
-accessible, but heavily rate limited.
+<a href="https://docs.ethers.io/v5/">Ethers.js</a> is a library that helps with connecting to the
+Ethereum network. When using Ethers.js, we don't have to care if we connect directly via an HTTP
+gateway or use a wallet extension. After a connection is established, we can call the same
+functions.
+</p>
+
+<p>Figure 2 shows how Ethers.js is layered between your frontend and the Ethereum network.</p>
+
+<figure>
+  <img src="images/blockchain-connection-ethersjs.png" />
+  <figcaption>
+    Figure 2: Blockchain connection with Ethers.js
+  </figcaption>
+</figure>
+
+<p>
+Ethers.js comes in the form of an ES-module on the NPM package registry. This means, we can
+<code>import</code> it directly in the browser from <a href="https://unpkg.com/">the Unpkg CDN</a>.
+</p>
+
+<p>Listing 1 shows how you <code>import</code> the <code>ethers</code> package into your code.</p>
+
+<pre>import {ethers} from "//unpkg.com/ethers@5.5.1/dist/ethers.esm.min.js"</pre>
+<cite>Listing 1: Importing the Ethers.js package</cite> 
+
+<h2>Connecting to the Ethereum Network</h2>
+
+<p>
+To connect to the Ethereum network, you have to create a provider. Providers are the abstraction
+Ethers.js uses to normalize access via wallet and HTTP gateway.
+</p>
+
+<p>
+You can create such an provider by calling the <code>getDefaultProvider</code> method of the
+<code>ethers</code> object we imported before. 
+</p>
+
+<blockquote>
+<b>Note:</b> This tutorial features an interactive editor. Here you can write JavaScript code and execute it with
+the press of a button. The Ethers.js library is imported for you and you can use <code>await</code>
+for asynchronous requests. It also has a <code>print</code> function you can use for debugging.
+</blockquote>
+
+<p>
+The first example is already written to show you how things work. Just press the <b>Execute</b>
+button and check the result.
 </p>
 
 <code-editor>
-  // Editable!
 const provider = ethers.getDefaultProvider()
 print(provider)
 </code-editor>
 
 <p>
-To check if the connection works, we will read a block from the chain add
-display the block's data in a pre-formatted HTML element.
+Let's try it yourself!
+</p>
+
+<p>
+To read data from the Etherum network, you can call the <code>getBlock</code> method of the
+<code>ethers</code> object. It returns a promise that resolves to an object that contains the
+block's data, so you need to <code>await</code> it. After you got the block, you can display its 
+content with the <code>print</code> function.
 </p>
 
 <code-editor>
-// Editable!
 const provider = ethers.getDefaultProvider()
-const block = await provider.getBlock(100004)
+// Write your code here!
+<p>
+const block = await provider.getBlock()
 print(block)
+</p>
 </code-editor>
+
+<p>
+If everything went correctly, we see the block data in the results. This is all very blockchain-y 
+information that doesn't tell us anything interesting yet. At least, we see that the connection 
+worked and something came back!
+</p>
+
+<p>
+The Ethers.js library comes pre-configured with a public HTTP gateway that can be used for free to
+read data from the Ethereum blockchain. This gateway has a request frequency limit, so it can 
+happen that you don't get a response if you send too many requests. But for this 
+tutorial, it should be enough.
+</p>
+
+<h2>Conclusion</h2>
+
+<p>
+We learned the differences between a Web2 and a Web3 backend in this lesson. How both rely on HTTP
+APIs. These APIs are called gateways in Web3 because they are the gateway into the blockchain
+network.
+</p>
+
+<p>
+We also learned how to connect to such a blockchain network with the help of the Ethers.js library.
+We didn't have to install anything, just call a few methods and see what happens.
+</p>
 
 <a href="01-read-address-data.html">01 Reading Address Data >></a>

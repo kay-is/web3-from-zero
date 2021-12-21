@@ -1,4 +1,4 @@
-@import url("//unpkg.com/sakura.css/css/sakura-vader.css");
+@import url("//unpkg.com/sakura.css/css/sakura-ink.css");
 @import url("//unpkg.com/@highlightjs/cdn-assets@11.3.1/styles/a11y-dark.min.css");
 
 body {
@@ -22,12 +22,22 @@ figure > img {
   margin-bottom: 0.5rem;
 }
 
-button {
-  width: 100%;
+[data-editor-execute] {
+  float: left;
+  width: 85%;
   margin-top: 0;
   font-size: large;
   font-weight: bold;
   height: 50px;
+}
+[data-editor-hint] {
+  width: 15%;
+  margin-top: 0;
+  font-size: large;
+  font-weight: bold;
+  height: 50px;
+  background-color: purple;
+  border-color: purple;
 }
 
 pre {
@@ -37,6 +47,6 @@ pre {
 }
 
 pre > code {
-  color: lightgray;
+  color: black;
   font-size: 1em;
 }
