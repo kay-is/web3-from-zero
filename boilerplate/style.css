@@ -1,12 +1,8 @@
-@import url("//unpkg.com/sakura.css/css/sakura-ink.css");
-@import url("//unpkg.com/@highlightjs/cdn-assets@11.3.1/styles/a11y-dark.min.css");
+/* @import url("//unpkg.com/sakura.css/css/sakura-ink.css"); */
+@import url("//unpkg.com/bamboo.css@1.3.7/dist/dark.min.css");
 
 body {
   max-width: 80ch;
-}
-
-p {
-  margin-top: 2.5rem;
 }
 
 figure {
@@ -36,17 +32,17 @@ figure > img {
   font-size: large;
   font-weight: bold;
   height: 50px;
-  background-color: purple;
-  border-color: purple;
+  background-color: dimgray;
+  border-color: dimgray;
 }
 
 pre {
   margin-bottom: 0;
   max-height: 400px;
-  color: grey;
+  color: lightgray;
 }
 
 pre > code {
-  color: black;
+  color: white;
   font-size: 1em;
 }

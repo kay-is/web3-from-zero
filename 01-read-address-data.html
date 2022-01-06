@@ -1,62 +1,226 @@
 <!DOCTYPE html>
 
-<title>01 Reading Address Data - Web3 From Zero</title>
-<h1>01 Reading Address Data</h1>
+<link rel="stylesheet" href="boilerplate/style.css" />
+<script type="module" src="boilerplate/editor.js"></script>
+
+<title>Web3 From Zero - Lesson 1</title>
+<h1>1. Reading Address Data</h1>
 
 <p>
-  An address can point to an account or a smart contract, both can have a
-  balance of Ether, the native currency of the Ethereum network. An account is
-  usually directly controlled by a user, a smart contract is an application
-  running autonomously on the blockchain.
+  Addresses form the core of blockchains. What IPs are for the Internet are addresses for the
+  blockchain. Smart contracts and externally owned accounts, short EOAs, are the targets of those
+  addresses.
 </p>
+
 <p>
-  We can read data stored at that address on the chain with the help of an
-  ethers.js provider. Using the <code>getBalance</code> function, we can read
-  the Ether balance of an address.
+  An address is 20 byte number derived from a public key and is usually displayed as 40 hex
+  digits. They look something like this <code>0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045</code>. 
+  More on that later.
 </p>
-<pre>
+
+<blockquote>
+  <b>Note: </b>An address is used to send and receive data or funds. This means, when you send tokens to an wrong
+  address, because of a typo, the money is gone. So always make save you have the correct address.
+  <b>Nobody can recover you from such an error!</b>
+</blockquote>
+
+<p>
+  A smart contract is a program deployed on the blockchain and autonomously executed by nodes
+  (computers) that make up the Ethereum network.
+</p>
+  
+<p>
+  An EOA is an address controlled by a private/public key pair owner, from outside of the Ethereum
+  network, thus the name <b>externally</b> owned account. Usually Wallet software is used to manage
+  EOA keys and addresses.
+</p>
+
+<p>
+  These addresses, both smart contracts and EOAs, have data associated with them. This data is
+  stored on Ethereum's blockchain and we can read and write it, if we have the right permissions. 
+  In this lesson we will just read data. As we can see in Figure 1, we can't write on the blockchain 
+  without a wallet.
+</p>
+
+<figure>
+  <img src="images/blockchain-connection-ethersjs.png" />
+  <figcaption>
+    Figure 1: Blockchain connection with Ethers.js
+  </figcaption>
+</figure>
+
+
+<h2>Reading the Transaction Count of an Address</h2>
+
+<p>
+  To read data, we need a provider, but also a target address. Let's start with the transaction (TX)
+  count. It's a simple numeric value stored on the chain for every address that was part in such a 
+  TX. It gets incremented by 1 if another TX with that address happens.
+</p>
+
+<p>
+  Ethers.js providers offer a <code>getTransactionCount</code> method that returns a promise that 
+  resolves to a TX count, so we have to <code>await</code> it.
+</p>
+
+<p>
+  Try it out in the editor! Call the method and <code>print</code> its result. The method expects an
+  address as <code>string</code> argument, so here a few you can use:
+</p>
+
+<ul>
+  <li>
+    Developer DAO NFT Smart Contract:<br>
+    <code>0xdd00Cc906B93419814443Bb913949d503B3DF3c4</code>
+  </li>
+  <li>
+    GitCoin MultiSig Smart Contract:<br>
+    <code>0xde21f729137c5af1b01d73af1dc21effa2b8a0d6</code>
+  </li>
+  <li>
+    Vitalik Buterin EOA:<br>
+    <code>0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045</code>
+  </li>
+</ul>
+
+<code-editor>
+  const address = "0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045"
   const provider = ethers.getDefaultProvider()
-  const balance = await provider.getBalance(
-    "0xdd00Cc906B93419814443Bb913949d503B3DF3c4"
-  )
-</pre>
+  // Write your code here!
+  <p>
+    const transactionCount = await provider.getTransactionCount(address)
+    print(transactionCount)
+  </p>
+</code-editor>
+
+<h2>Reading the Balance at an Address</h2>
 
 <p>
-  Ethers.js packaged the balance with the <code>BigNumber</code> type, because
-  the value is too big for JavaScript's number type. We have to convert the
-  balance to a string with the right amount of decimal points to display it in a
-  human readable way.
+  Reading the balance of an address is a bit more complex than reading the TX count.
 </p>
 
 <p>
-  For this conversion, we can use the utility functions ethers.js includes. The
-  <code>formatUnits</code> function will automatically try to convert a
-  <code>BigNumber</code> to an <code>string</code> with the right decimal
-  points.
+  Both, smart contracts and EOAs, have an Ether balance, the native currency, or more precisely
+  the <b>native token</b>, of the Ethereum network. Ether's primary use-case is paying for TX fees
+  on the Ethereum network.
 </p>
-
-<pre>
-  pre.innerText = ethers.utils.formatUnits(balance) + " ETH"
-</pre>
-
-<h2>Balance of address 0xdd00Cc906B...</h2>
-
-<pre id="target1">Loading...</pre>
 
 <p>
-  Antoher information we can get from an address is its transaction count. We
-  can use this count to keep track of an accounts activities.
+  Using a provider's <code>getBalance</code> method, we can read the Ether balance of an address.
+  Again, this method returns a promise, so you have to <code>await</code> it.
 </p>
 
-<pre>
-  const transactionCount = await provider.getTransactionCount(
-    "0xdd00Cc906B93419814443Bb913949d503B3DF3c4"
-  )
-</pre>
+<p>
+  Try it out in the editor! Call the method and <code>print</code> its result. The method expects an
+  address as <code>string</code> argument, so here a few you can use:
+</p>
 
-<h2>Transaction count of address 0xdd00Cc906B...</h2>
+<ul>
+  <li>
+    Developer DAO NFT Smart Contract:<br>
+    <code>0xdd00Cc906B93419814443Bb913949d503B3DF3c4</code>
+  </li>
+  <li>
+    GitCoin MultiSig Smart Contract:<br>
+    <code>0xde21f729137c5af1b01d73af1dc21effa2b8a0d6</code>
+  </li>
+  <li>
+    Vitalik Buterin EOA:<br>
+    <code>0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045</code>
+  </li>
+</ul>
 
-<pre id="target2">Loading...</pre>
+<code-editor>
+  const provider = ethers.getDefaultProvider()
+  // Write your code here!
+  <p>
+    const balance = await provider.getBalance(
+      "0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045"
+    )
+    print(balance)
+  </p>
+</code-editor>
+
+<p>
+  So, we got the balance, but why does it look like that?
+</p>
+
+<h2>The BigNumber Type</h2>
+
+<p>
+  Ethers.js packaged the balance with its own <code>BigNumber</code> type, because the value is too
+  big for JavaScript's <code>Number</code> type to store. We have to convert the balance to a string
+  with the right amount of decimal points to display it in a human readable way.
+</p>
+
+<p>
+  One of the main differences between Ethereum and JavaScript are number types. For a long time,
+  every numerical value was of type <code>Number</code> in JavaScript, which is a double-precision
+  (64bit) floating-point format</double-precisi>. Every numerical value <b>was</b> stored like that,
+  because some time ago it got a new number type called 
+  <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/BigInt" target="_blank">
+  <code>BigInt</code></a> for very large integer values.
+</p>
+
+<p>
+  In Solidity, the programming language to develop smart contracts for Ethereum, everything is an
+  integer. Solidity is mainly concerned with payment, and floating point values have some quirks
+  that can cost you money, so they opted for going integer only. Solidity always stores numbers as
+  integers, and the most common type is <code>uint256</code> (alisas <code>uint</code>) which can
+  store 78 decimal digits. In comparison, JavaScript's <code>Number</code> type can only store 16
+  digits. 
+</p>
+
+<p>
+  Tokens can have more than 16 digits, so they're too big for <code>Number</code>. Addresses are also stored
+  as integers and are 20 byte big (40 hex digits). 20 byte are 160 bit, so they don't fit into
+  the 64 bit <code>Number</code> type either. That's why we use a <code>String</code> to store
+  addresses in JavaScript.
+</p>
+
+<p>
+  Since Ethers.js wants to be backwards compatible with older JavaScript versions that don't support 
+  <code>BigInt</code>, they implemented their own integer type called <code>BigNumber</code>. It
+  comes with <a href="https://docs.ethers.io/v5/api/utils/bignumber/#BigNumber--methods" target="_blank">
+  methods for basic arithmetics</a>, but can also be converted to <code>String</code> or
+  <code>BigInt</code> when needed.
+</p>
+
+<h2>Converting to a Readable Format</h2>
+
+<p>
+  The result of the last exercise yielded a <code>BigNumber</code> object that isn't easily human 
+  readable. While it's enough to work with the value inside of our code, we should convert it to a 
+  <code>String</code> before we display it to a user.
+</p>
+
+<p>
+  To do so, we can use
+  <a href="https://docs.ethers.io/v5/api/utils/display-logic/#display-logic--functions">
+  utility functions</a> Ethers.js includes. The <code>formatUnits</code> function will automatically
+  convert a <code>BigNumber</code> to a <code>string</code> with the right decimal points. Which is
+  handy to display a balance to a user.
+</p>
+
+<p>
+  Try to convert the <code>BigNumber</code> to a <code>string</code> and <code>print</code> it!
+</p>
+
+<p>
+  The <code>formatUnits</code> function can be found in the <code>ethers.utils</code> object. This
+  time it returns the result right away, so no <code>await</code> required.
+</p>
+
+<code-editor>
+  const address = "0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045"
+  const provider = ethers.getDefaultProvider()
+  const balance = await provider.getBalance(address)
+  // Write your code here!
+  <p>
+    const readableBalance = ethers.utils.formatUnits(balance) + " ETH"
+    print(readableBalance)
+  </p>
+</code-editor>
 
 <div>
   <a href="00-connect-to-blockchain.html"><< 00 Connect to the Blockchain</a>
@@ -64,38 +228,21 @@
   <a href="02-using-ens.html">02 Using the Ethereum Name Service >></a>
 </div>
 
-<script type="module">
-  import { ethers } from "//unpkg.com/ethers@5.5.1/dist/ethers.esm.min.js"
+<h2>Conclusion</h2>
 
-  const provider = ethers.getDefaultProvider()
-  {
-    const balance = await provider.getBalance(
-      "0xdd00Cc906B93419814443Bb913949d503B3DF3c4"
-    )
+<p>
+  In this lesson, we learned that addresses are the fundamet of the Ethereum blockchain and that 
+  externally owned accounts and smart contracts are the targed of those addresses.
+</p>
 
-    const pre = document.querySelector("#target1")
-    pre.innerText = ethers.utils.formatUnits(balance) + " ETH"
-  }
+<p>
+  Addresses are 160 bits, or 20 bytes, integers which are usually displayed as 40 hex 
+  digits and JavaScript can't store themn in its native <code>Number</code> type, because it's only 
+  8 bytes big. Same goes for token balances, which can have more than the 16 digits a
+  <code>Number</code> could store.
+</p>
 
-  {
-    const transactionCount = await provider.getTransactionCount(
-      "0xdd00Cc906B93419814443Bb913949d503B3DF3c4"
-    )
-
-    const pre = document.querySelector("#target2")
-    pre.innerText = transactionCount
-  }
-</script>
-
-<!-- Styling Boilerplate -->
-<link rel="stylesheet" href="//unpkg.com/bamboo.css@1.3.7/dist/dark.min.css" />
-<link
-  rel="stylesheet"
-  href="//unpkg.com/@highlightjs/cdn-assets@11.3.1/styles/default.min.css"
-/>
-<script src="//unpkg.com/@highlightjs/cdn-assets@11.3.1/highlight.min.js"></script>
-<script>
-  document.addEventListener("DOMContentLoaded", () =>
-    document.querySelectorAll("pre").forEach((el) => hljs.highlightElement(el))
-  )
-</script>
+<p>
+  In <a href="02-connect-to-contracts.html">the next lesson</a>, we will learn how to interact with
+  smart contracts.
+</p>

@@ -2,6 +2,13 @@ import { ethers } from "//unpkg.com/ethers@5.5.1/dist/ethers.esm.min.js"
 
 window.ethers = ethers
 
+const clearHtmlCode = (code) =>
+  code
+    .trim()
+    .split("\n")
+    .map((line) => line.trim())
+    .join("\n")
+
 customElements.define(
   "code-editor",
   class CodeEditor extends HTMLElement {
@@ -9,11 +16,11 @@ customElements.define(
       const hintElement = this.querySelector("p")
       let codeHint = null
       if (hintElement) {
-        codeHint = hintElement.innerHTML.trim()
+        codeHint = clearHtmlCode(hintElement.innerHTML)
         this.removeChild(hintElement)
       }
 
-      const code = this.innerHTML.trim()
+      const code = clearHtmlCode(this.innerHTML)
 
       this.innerHTML = `
       <pre><code data-editor-input contenteditable spellcheck="false">${code}</code></pre>
@@ -22,7 +29,8 @@ customElements.define(
         <button data-editor-hint ${!codeHint ? "disabled" : ""}>Hint?</button>
       </div>
       <b>Result</b>
-      <pre data-editor-result></pre>`
+      <pre data-editor-result></pre>
+      <br>`
 
       this.querySelector("[data-editor-execute]").addEventListener(
         "click",
