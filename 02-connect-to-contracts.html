@@ -12,13 +12,14 @@
 </p>
 
 <p>
-  Smart contracts are written in Solidity. Like Java, Solidity gets compiled to a bytecode that runs
-  in a virtual machine. In this case, it's called the Ethereum Virtual Machine, or EVM for short.
+  You write smart contracts in the Solidity programming language. Like Java, Solidity gets compiled
+  to a bytecode that runs in a virtual machine. In this case, it's called the Ethereum Virtual 
+  Machine, or EVM for short.
 </p>
 
 <h2>Interacting with Smart Contracts</h2>
 
-<p>To interact with a smart contract form JavaScript, we need three things:</p>
+<p>To interact with a smart contract from JavaScript, you need three things:</p>
 
 <ol>
   <li>The address that points to the smart contract</li>
@@ -27,8 +28,8 @@
 </ol>
 
 <p>
-  In the last lesson we learned, every EOA or smart contract has an address, this is how we know
-  where on the blockchain it is stored.
+  In the last lesson, you learned, every EOA and smart contract has an address; this is how you find
+  the contract on the blockchain.
 </p>
 
 <pre>
@@ -37,14 +38,14 @@ const address = "0x25ed58c027921E14D86380eA2646E3a1B5C55A8b"
 <br>
 
 <p>
-  To figure out what functions a contract has to offer, we need an ABI, a list of function
-  signatures of functions we want to call later. The ABI is used by Ethers.js to figure out what
-  arguments a function expects and what values it returned when it finished its work.
+  To figure out what functions a contract has to offer, you need an ABI, a list of function
+  signatures of functions you want to call later. Ethers.js uses the ABI to determine what arguments
+  a function expects and what values it returned when it finished its work.
 </p>
 
 <p>
-  When using Ethers.js, we can define the ABI as an array of strings, where the strings are Solidity
-  function signatures, just like they would be written in the Solidity programming language.
+  When using Ethers.js, you can define the ABI as an array of strings, where the strings are
+  Solidity function signatures, just like you would write them in the Solidity programming language.
 </p>
 
 <p>Here is an example of an ABI for one function:</p>
@@ -69,22 +70,22 @@ const abi = [
 
 <p>
   The <code>external</code> keyword is an access modifier that marks the function as callable from 
-  outside of the contract. This is important because we want to do precisely that.
+  outside of the contract.
 </p>
 
 <p>
   The <code>view</code> keyword is crucial too because it tells the EVM that the function won't
-  modify any on-chain state; it will just read it. This enables us to call it without having a
-  wallet because the Ethereum gateway we use can simply read all data from its local copy of the 
-  blockchain.
+  modify any on-chain state; it will just read it. <code>view</code> enables us to call the function
+  without having a wallet because the Ethereum gateway you use can read all data from its local copy
+  of the blockchain.
 </p>
 <p>
-  The <code>returns</code> keyword tells is what we get back when we call the
-  function. In this case, it's the address of the owner of a token.
+  The <code>returns</code> keyword tells is what you get back when you call the function. In this
+  case, it's the owner's address of a token.
 </p>
 
 <p>
-  The next step is to create a new instance of the contract and call the function!
+  The next step is to create a new contract instance and call the function!
 </p>
 
 <p>Try it yourself in the editor!</p>

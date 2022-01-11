@@ -7,20 +7,20 @@
 <h1>1. Reading Address Data</h1>
 
 <p>
-  Addresses form the core of blockchains. What IPs are for the Internet are addresses for the
+  Addresses form the core of blockchains. What IPs are for the Internet address are for the
   blockchain. Smart contracts and externally owned accounts, short EOAs, are the targets of those
   addresses.
 </p>
 
 <p>
-  An address is 20 byte number derived from a public key and is usually displayed as 40 hex
-  digits. They look something like this <code>0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045</code>. 
-  More on that later.
+  An address is 20 byte number derived from a public key and is usually displayed as 40 hex digits.
+  They look something like this <code>0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045</code>. More on
+  that later.
 </p>
 
 <blockquote>
-  <b>Note: </b>An address is used to send and receive data or funds. This means, when you send tokens to an wrong
-  address, because of a typo, the money is gone. So always make save you have the correct address.
+  <b>Note: </b>An address is used to send and receive data or funds. The money is gone when you send
+  tokens to the wrong address because of a typo. So always save you have the correct address.
   <b>Nobody can recover you from such an error!</b>
 </blockquote>
 
@@ -30,16 +30,16 @@
 </p>
   
 <p>
-  An EOA is an address controlled by a private/public key pair owner, from outside of the Ethereum
-  network, thus the name <b>externally</b> owned account. Usually Wallet software is used to manage
-  EOA keys and addresses.
+  An EOA is an address controlled by a private/public key pair owner from outside the Ethereum
+  network; thus, the name <b>externally</b> owned account. Usually, you use wallet software to
+  manage EOA keys and addresses.
 </p>
 
 <p>
-  These addresses, both smart contracts and EOAs, have data associated with them. This data is
-  stored on Ethereum's blockchain and we can read and write it, if we have the right permissions. 
-  In this lesson we will just read data. As we can see in Figure 1, we can't write on the blockchain 
-  without a wallet.
+  These addresses, both smart contracts and EOAs, have data associated with them. The Ethereum
+  blockchain stores this data, and you can read and write it if you have the correct permissions. In
+  this lesson, you will just read data. As you can see in Figure 1, you can't write on the
+  blockchain without a wallet.
 </p>
 
 <figure>
@@ -53,14 +53,14 @@
 <h2>Reading the Transaction Count of an Address</h2>
 
 <p>
-  To read data, we need a provider, but also a target address. Let's start with the transaction (TX)
-  count. It's a simple numeric value stored on the chain for every address that was part in such a 
-  TX. It gets incremented by 1 if another TX with that address happens.
+  To read data, you need an Ethers.js provider but also a target address. Let's start with the
+  transaction (TX) count. It's a simple numeric value stored on the chain for every address that was
+  part of such a TX. It gets incremented by 1 if another TX with that address happens.
 </p>
 
 <p>
   Ethers.js providers offer a <code>getTransactionCount</code> method that returns a promise that 
-  resolves to a TX count, so we have to <code>await</code> it.
+  resolves to a TX count, so you have to <code>await</code> it.
 </p>
 
 <p>
@@ -100,13 +100,13 @@
 </p>
 
 <p>
-  Both, smart contracts and EOAs, have an Ether balance, the native currency, or more precisely
-  the <b>native token</b>, of the Ethereum network. Ether's primary use-case is paying for TX fees
-  on the Ethereum network.
+  Both, smart contracts and EOAs, have an Ether balance, the native currency, or more precisely, the
+  <b>native token</b> of the Ethereum network. Ether's primary use-case is paying for TX fees on the
+  Ethereum network.
 </p>
 
 <p>
-  Using a provider's <code>getBalance</code> method, we can read the Ether balance of an address.
+  Using a provider's <code>getBalance</code> method, you can read the Ether balance of an address.
   Again, this method returns a promise, so you have to <code>await</code> it.
 </p>
 
@@ -149,8 +149,8 @@
 
 <p>
   Ethers.js packaged the balance with its own <code>BigNumber</code> type, because the value is too
-  big for JavaScript's <code>Number</code> type to store. We have to convert the balance to a string
-  with the right amount of decimal points to display it in a human readable way.
+  big for JavaScript's <code>Number</code> type to store. You have to convert the balance to a string
+  with the right amount of decimal points to display it in a human-readable way.
 </p>
 
 <p>
@@ -163,19 +163,19 @@
 </p>
 
 <p>
-  In Solidity, the programming language to develop smart contracts for Ethereum, everything is an
-  integer. Solidity is mainly concerned with payment, and floating point values have some quirks
+  Everything is an integer in Solidity, the programming language to develop smart contracts for
+  Ethereum. Solidity is mainly concerned with payment, and floating-point values have some quirks
   that can cost you money, so they opted for going integer only. Solidity always stores numbers as
-  integers, and the most common type is <code>uint256</code> (alisas <code>uint</code>) which can
+  integers, and the most common type is <code>uint256</code> (alias <code>uint</code>) which can
   store 78 decimal digits. In comparison, JavaScript's <code>Number</code> type can only store 16
   digits. 
 </p>
 
 <p>
-  Tokens can have more than 16 digits, so they're too big for <code>Number</code>. Addresses are also stored
-  as integers and are 20 byte big (40 hex digits). 20 byte are 160 bit, so they don't fit into
-  the 64 bit <code>Number</code> type either. That's why we use a <code>String</code> to store
-  addresses in JavaScript.
+  Tokens can have more than 16 digits, so they're too big for <code>Number</code>. Addresses are
+  also stored as integers and are 20 byte big (40 hex digits). 20 byte are 160 bit, so they don't
+  fit into the 64 bit <code>Number</code> type either. That's why you use a <code>String</code> to
+  store addresses in JavaScript.
 </p>
 
 <p>
@@ -189,17 +189,17 @@
 <h2>Converting to a Readable Format</h2>
 
 <p>
-  The result of the last exercise yielded a <code>BigNumber</code> object that isn't easily human 
-  readable. While it's enough to work with the value inside of our code, we should convert it to a 
-  <code>String</code> before we display it to a user.
+  The last exercise yielded a <code>BigNumber</code> object that isn't easily human-readable. While
+  it's enough to work with the value inside of our code, you should convert it to a 
+  <code>String</code> before you show it to a user.
 </p>
 
 <p>
-  To do so, we can use
-  <a href="https://docs.ethers.io/v5/api/utils/display-logic/#display-logic--functions">
-  utility functions</a> Ethers.js includes. The <code>formatUnits</code> function will automatically
-  convert a <code>BigNumber</code> to a <code>string</code> with the right decimal points. Which is
-  handy to display a balance to a user.
+  To do so, you can use
+  <a href="https://docs.ethers.io/v5/api/utils/display-logic/#display-logic--functions"> utility
+  functions</a> Ethers.js includes. The <code>formatUnits</code> function will automatically convert
+  a <code>BigNumber</code> to a <code>string</code> with the right decimal points. Which is handy to
+  display a balance to a user.
 </p>
 
 <p>
@@ -225,18 +225,17 @@
 <h2>Conclusion</h2>
 
 <p>
-  In this lesson, we learned that addresses are the fundamet of the Ethereum blockchain and that 
-  externally owned accounts and smart contracts are the targed of those addresses.
+  In this lesson, you learned that addresses are the fundament of the Ethereum blockchain and that 
+  externally owned accounts and smart contracts are the targets of those addresses.
 </p>
 
 <p>
-  Addresses are 160 bits, or 20 bytes, integers which are usually displayed as 40 hex 
-  digits and JavaScript can't store themn in its native <code>Number</code> type, because it's only 
-  8 bytes big. Same goes for token balances, which can have more than the 16 digits a
-  <code>Number</code> could store.
+  Addresses are 160 bits or 20 bytes, integers usually displayed as 40 hex digits, and JavaScript
+  can't store them in its native <code>Number</code> type because it's only 8 bytes big. The same
+  goes for token balances, which can have more than 16 digits a <code>Number</code> could store.
 </p>
 
 <p>
-  In <a href="02-connect-to-contracts.html">the next lesson</a>, we will learn how to interact with
+  In <a href="02-connect-to-contracts.html">the next lesson</a>, you will learn how to interact with
   smart contracts.
 </p>
