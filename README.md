@@ -7,7 +7,7 @@ This course is in-progress and help is appreciated!
 - [00 Connecting to the Blockchain](https://kay-is.github.io/web3-from-zero/00-connect-to-blockchain.html)
 - [01 Reading an Address Data](https://kay-is.github.io/web3-from-zero/01-read-address-data.html)
 - [02 Connecting to Smart Contracts](https://kay-is.github.io/web3-from-zero/02-connect-to-contracts.html)
-- [03 Using the Ethereum Name Service](https://kay-is.github.io/web3-from-zero/02-using-ens.html)
+- [03 Using the Ethereum Name Service](https://kay-is.github.io/web3-from-zero/03-using-ens.html)
 
 ## Ethereum Edition
 
