@@ -1,5 +1,7 @@
 A basic introduction to web3 and its concepts, using the JavaScript you already know.
 
+This course is in-progress and help is appreciated!
+
 ## Lessons
 
 - [00 Connecting to the Blockchain](https://kay-is.github.io/web3-from-zero/00-connect-to-blockchain.html)
