@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+
+
+<link rel="stylesheet" href="boilerplate/style.css" />
+<script type="module" src="boilerplate/editor.js"></script>
+
+<title>Web3 From Zero - Lesson 3</title>
+<h1>3. Using the Ethereum Name Service</h1>
+
+<p>
+  In the previous lesson, you learned about smart contracts and how to connect to them. The next 
+  step is to make this work easier with ENS.
+</p>
+
+<p>
+  You learned that addresses are to the blockchain what IPs are to the internet. The same goes for 
+  the Ethereum Name Service, short ENS. It's the blockchain equivalent of the Domain Name Service, 
+  or DNS.
+</p>
+
+<p>
+  ENS can be used to make addresses more accessible for humans. This way you can connect to EOAs and
+  smart contracts with a human readable string.
+</p>
+
+<p>
+  You can register ENS domains just like regular domains at <a href="https://ens.domains/">the ENS
+  service website</a>.
+</p>
+
+<h2>Reading a Contract's Balance</h2>
+
+<p>
+  Ethers.js works transparently with ENS, so we can simply replace the address from the last lesson
+  with an ENS domain that resolves to that address. In case of that address a corresponding domain
+  is <code>devdao.eth</code>.
+</p>
+
+<p>
+  Try it in the editor. Fetch the balance of the Developer DAO NFT contract and print it. But use
+  the <code>devdao.eth</code> ENS domain instead of the address!
+</p>
+
+<code-editor>
+const provider = ethers.getDefaultProvider()
+// write your code here!
+<p>
+const balance = await provider.getBalance("devdao.eth")
+print(ethers.utils.formatUnits(balance) + " ETH")
+</p>
+</code-editor>
+
+<blockquote>
+  Note: Keep in mind, the target blockchain address of a ENS domain can change. So if
+  you want to make sure that the same address is called every time, use the
+  address directly.
+</blockquote>
+
+<h2>Conclusion</h2>
+<p>...</p>

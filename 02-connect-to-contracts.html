@@ -23,7 +23,7 @@
 
 <ol>
   <li>The address that points to the smart contract</li>
-  <li>The full or partial Application Binary Interface (ABI) of the contract</li>
+  <li>The full or partial Application Binary Interface of the contract</li>
   <li>A provider that is connected to the Ethereum network</li>
 </ol>
 
@@ -38,9 +38,9 @@ const address = "0x25ed58c027921E14D86380eA2646E3a1B5C55A8b"
 <br>
 
 <p>
-  To figure out what functions a contract has to offer, you need an ABI, a list of function
-  signatures of functions you want to call later. Ethers.js uses the ABI to determine what arguments
-  a function expects and what values it returned when it finished its work.
+  To figure out what functions a contract has to offer, you need an Application Binary Interface, or short ABI, a list
+  of function signatures of functions you want to call later. Ethers.js uses the ABI to determine what arguments a
+  function expects and what values it returned when it finished its work.
 </p>
 
 <p>
@@ -75,17 +75,18 @@ const abi = [
 
 <p>
   The <code>view</code> keyword is crucial too because it tells the EVM that the function won't
-  modify any on-chain state; it will just read it. <code>view</code> enables us to call the function
-  without having a wallet because the Ethereum gateway you use can read all data from its local copy
-  of the blockchain.
+  modify any on-chain state; it will just read it. <code>view</code> enables you to call the
+  function without having a wallet because the Ethereum gateway you use can read all data from its
+  local copy of the blockchain.
 </p>
 <p>
-  The <code>returns</code> keyword tells is what you get back when you call the function. In this
+  The <code>returns</code> keyword tells you what you get back when you call the function. In this
   case, it's the owner's address of a token.
 </p>
 
 <p>
-  The next step is to create a new contract instance and call the function!
+  The next step is to create a new contract instance and call the <code>ownerOf</code> function
+  defined by the ABI!
 </p>
 
 <p>Try it yourself in the editor!</p>
@@ -107,3 +108,28 @@ const owner = await smartContract.ownerOf(2)
 print(owner)
 </p>
 </code-editor>
+
+<p>
+  The owner of the contract, like everything on the blockchain, is located at an address, and this 
+  is just what the function returned. The address could point to another contract that created our 
+  contract, as so called factory contract. The address could also point to an EOA, which is the case
+  in this example. 
+</p>
+
+<h2>Conclusion</h2>
+
+<p>
+  This lesson taught you about smart contract interaction. How to find them on the blockchain with
+  the help of a provider and an address and how to call its functions with an ABI.
+</p>
+
+<p>
+  An ABI is just an array of strings, these strings are function signatures like you would write
+  them in Solidity, the programming language powering Ethereum.
+</p>
+
+<p>
+  If you found these addresses a bit cumbersome to work with, I have good news for you.
+  <a href="03-using-ens.html">The next lesson</a> is about the blockchain equivalent of DNS:
+  <a href="https://ens.domains/">The Etherum Name Service.</a>
+</p>
