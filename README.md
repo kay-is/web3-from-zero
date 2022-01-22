@@ -8,6 +8,7 @@ This course is in-progress and help is appreciated!
 - [01 Reading an Address Data](https://kay-is.github.io/web3-from-zero/01-read-address-data.html)
 - [02 Connecting to Smart Contracts](https://kay-is.github.io/web3-from-zero/02-connect-to-contracts.html)
 - [03 Using the Ethereum Name Service](https://kay-is.github.io/web3-from-zero/03-using-ens.html)
+- [04 Ethereum Request for Comment](https://kay-is.github.io/web3-from-zero/04-erc.html)
 
 ## Ethereum Edition
 
