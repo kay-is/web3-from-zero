@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+
+
+<link rel="stylesheet" href="boilerplate/style.css" />
+<script type="module" src="boilerplate/editor.js"></script>
+
+<title>Web3 From Zero - Lesson 4</title>
+<h1>4. Ethereum Request for Comment</h1>
+
+<p>
+  When building decentralized systems, one of the most crucial parts is how they interact. You 
+  learned that a smart contract has public functions, but you also need an ABI to
+  call them.
+</p>
+
+<p>
+  You might be able to reverse engineer the ABI in some way, for example, by reading the 
+  source code. But sadly, not all smart contracts are open source. This makes the task quite 
+  cumbersome.
+</p>
+
+<h2>Enter Ethereum Request for Comments</h2>
+
+<p>
+  Luckily the creators of Ethereum saw this problem early on and focused on interopt between smart 
+  contracts. The result is the Ethereum request for comments or short ERCs. They can contain specs
+  for interfaces a smart contract has to implement.
+</p>
+
+<p>
+  The process goes as follows: Things aren't going smoothly for some reason or another, and users
+  want to solve it. They write an Ethereum Improvement Proposal (EIP) and layout what could be 
+  better. Next, the Ethereum Committee will approve the EIP if it's okay and create an ERC based on
+  the EIP.
+</p>
+
+<p>
+  This process leads to new ways for smart contract interopt and makes it easier to mix and match 
+  smart contracts in Web3 applications.
+</p>
+
+<h2>ERC-20 & ERC-721 Token Standards</h2>
+
+<p>
+  The most prominent ERCs are <a href="https://eips.ethereum.org/EIPS/eip-20">ERC-20</a> for
+  fungible tokens, commonly known as cryptocurrencies or simply tokens, and
+  <a href="https://eips.ethereum.org/EIPS/eip-721">ERC-721</a> for non-fungible tokens, known as
+  NFTs.
+</p>
+
+<p>
+  While critical functions of smart contracts are usually bound to specific addresses, many are 
+  external without any permissions so that you can call them via Ethers.js.
+</p>
+
+<h2>Creating an ERC-721 Read-Only ABI</h2>
+
+<p>
+  If you know the address of a smart contract that mints NFTs, you can go and search for an ERC-721
+  ABI and use it together with the address to call it.
+</p>
+
+<p>
+  The standardized Solidity <code>interface</code> for an ERC-721 contract looks like this:
+</p>
+
+<pre>
+interface ERC721 {
+    event Transfer(address indexed _from, address indexed _to, uint256 indexed _tokenId);
+    event Approval(address indexed _owner, address indexed _approved, uint256 indexed _tokenId);
+    event ApprovalForAll(address indexed _owner, address indexed _operator, bool _approved);
+
+    function balanceOf(address _owner) external view returns (uint256);
+    function ownerOf(uint256 _tokenId) external view returns (address);
+    function safeTransferFrom(address _from, address _to, uint256 _tokenId, bytes data) external payable;
+    function safeTransferFrom(address _from, address _to, uint256 _tokenId) external payable;
+    function transferFrom(address _from, address _to, uint256 _tokenId) external payable;
+    function approve(address _approved, uint256 _tokenId) external payable;
+    function setApprovalForAll(address _operator, bool _approved) external;
+    function getApproved(uint256 _tokenId) external view returns (address);
+    function isApprovedForAll(address _owner, address _operator) external view returns (bool);
+}
+</pre>
+<br>
+
+<p>
+  We learned in lesson 2 that we can convert this to an ABI for Ethers.js by simply copying the 
+  function signatures as strings into a JavaScript array.
+</p>
+
+<pre>
+const erc721Abi = [
+  "function balanceOf(address _owner) external view returns (uint256)",
+  "function ownerOf(uint256 _tokenId) external view returns (address)",
+  "function safeTransferFrom(address _from, address _to, uint256 _tokenId, bytes data) external payable",
+  "function safeTransferFrom(address _from, address _to, uint256 _tokenId) external payable",
+  "function transferFrom(address _from, address _to, uint256 _tokenId) external payable",
+  "function approve(address _approved, uint256 _tokenId) external payable",
+  "function setApprovalForAll(address _operator, bool _approved) external",
+  "function getApproved(uint256 _tokenId) external view returns (address)",
+  "function isApprovedForAll(address _owner, address _operator) external view returns (bool)",
+]
+</pre>
+<br>
+
+<p>
+  Now, since we don't have covered wallets yet, we are only able to call the <code>view</code>
+  functions, so let's throw the rest out.
+</p>
+
+<pre>
+const erc721ReadOnlyAbi = [
+  "function balanceOf(address _owner) external view returns (uint256)",
+  "function ownerOf(uint256 _tokenId) external view returns (address)",
+  "function getApproved(uint256 _tokenId) external view returns (address)",
+  "function isApprovedForAll(address _owner, address _operator) external view returns (bool)",
+]
+</pre>
+<br>
+
+<p>
+  Try to get the owner of <code>tokenId</code> <code>5666</code> for the NFT contract located at 
+  <code>0x25ed58c027921E14D86380eA2646E3a1B5C55A8b</code>, using the ABI we defined above and
+  <code>print</code> the result!
+</p>
+
+<p>
+  You can use the <code>lookupAddress</code> method of the provider to get the ENS domain that points to an address. 
+  Try that for the owner address of the token.
+</p>
+
+<code-editor>
+  const provider = ethers.getDefaultProvider()
+  // Write your code here!
+  <p>
+    const erc721ReadOnlyAbi = [
+      "function balanceOf(address _owner) external view returns (uint256)",
+      "function ownerOf(uint256 _tokenId) external view returns (address)",
+      "function getApproved(uint256 _tokenId) external view returns (address)",
+      "function isApprovedForAll(address _owner, address _operator) external view returns (bool)",
+    ]
+
+    const contractAddress = "0x25ed58c027921E14D86380eA2646E3a1B5C55A8b"
+
+    const smartContract = new ethers.Contract(
+      contractAddress,
+      erc721ReadOnlyAbi,
+      provider
+    )
+
+    const ownerAddress = await smartContract.ownerOf(5666)
+
+    const ownerDomain = await provider.lookupAddress(ownerAddress)
+
+    print(ownerDomain)
+  </p>
+</code-editor>
+
+<h2>Summary</h2>
+
+<p>
+  In this lesson you learned about ERCs. How they standardize interfaces and behavior to help you 
+  using these contracts and also allow other contrats to interact with them.
+</p>
+
+<p>
+  We also converted a Solitidy interface defined in the ERC-721 to a ABI you can use with Ethers.js.
+</p>
