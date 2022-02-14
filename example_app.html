@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+
+<link rel="stylesheet" href="boilerplate/style.css" />
+
+<style>
+  label, button {
+    margin: 10px;
+  }
+</style>
+
+<title>NFT <-> Owner</title>
+
+<h1 style="text-align: center;">NFT Owner Finder</h1>
+
+<p>
+  Please enter the address of a smart contract that implements the ERC271 specification.
+</p>
+
+<div>
+<label>
+  Smart Contract Address
+  <input id="smartContractAddressInput" value="0x25ed58c027921E14D86380eA2646E3a1B5C55A8b"/>
+</label>
+
+<div style="display: flex;">
+  <label>
+    Target Token ID
+    <input id="tokenIdInput" type="number" value="5666" />
+  </label>
+  <button id="findOwnerButton">Find Token Owner</button>
+</div>
+
+<hr />
+
+<label>
+  Owner Address
+  <input id="ownerAddressInput" disabled />
+</label>
+<label>
+  Owner ENS Domain
+  <input id="ownerDomainInput" disabled />
+</label>
+<label>
+  Token Metadata
+  <textarea id="tokenMetadataInput" disabled style="height: 400px"></textarea>
+</label>
+<label>
+  Token Image
+  <img src="" id="tokenImage"/>
+</label>
+
+<script type="module">
+  import { ethers } from "//unpkg.com/ethers@5.5.1/dist/ethers.esm.min.js"
+
+  const smartContractAddressInput = document.getElementById("smartContractAddressInput")
+  const tokenIdInput = document.getElementById("tokenIdInput")
+  const ownerAddressInput = document.getElementById("ownerAddressInput")
+  const ownerDomainInput = document.getElementById("ownerDomainInput")
+  const findOwnerButton = document.getElementById("findOwnerButton")
+  const tokenMetadataInput = document.getElementById("tokenMetadataInput")
+  const tokenImage = document.getElementById("tokenImage")
+
+  const erc721ReadOnlyAbi = [
+    "function ownerOf(uint256 _tokenId) external view returns (address)",
+    "function tokenURI(uint256 _tokenId) external view returns (string)"
+  ]
+
+  const provider = ethers.getDefaultProvider()
+
+  findOwnerButton.addEventListener("click", async () => {
+    const contractAddress = smartContractAddressInput.value
+    const smartContract = new ethers.Contract(contractAddress, erc721ReadOnlyAbi, provider)
+
+    ownerAddressInput.value = "Loading..."
+    ownerDomainInput.value = "Loading..."
+    tokenMetadataInput.value = "Loading..."
+    tokenImage.src = ""
+
+    try {
+      const metadataUri = await smartContract.tokenURI(tokenIdInput.value)
+      const metadata = await fetch(metadataUri).then(r => r.text()).then(t => JSON.parse(t))
+      tokenImage.src = metadata.image
+      tokenMetadataInput.value = JSON.stringify(metadata, null, 2)
+    } catch(e) {
+      tokenMetadataInput.value = "Can't load token data."
+    }
+
+    try {
+      ownerAddressInput.value = await smartContract.ownerOf(tokenIdInput.value)
+    } catch(e) {
+      ownerAddressInput.value = "No owner found."
+    }
+
+    ownerDomainInput.value = (await provider.lookupAddress(ownerAddressInput.value)) ?? "No domain assigned to owner's address."
+  })
+
+</script>

@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+
+<link rel="stylesheet" href="boilerplate/style.css" />
+
+<title>Web3 From Zero - Lesson 5</title>
+
+<h1>5. Building an Example App</h1>
+
+<p>
+  Now that you know how to connect to the Ethereum network with its smart contracts and find
+  out which functions a smart contract provides, you can finally implement our first small app!
+</p>
+
+<h2>Building the App</h2>
+
+<p>This lesson is more hands-on, which means you have to build your app on your own!</p>
+
+<p>
+  Since you didn't learn about wallets, you can't change anything on the blockchain, but
+  you can read what's already been written on it by other people around the world. But you get some
+  pointers, so you know how to start. Also, I've already written the app so that you can check out a
+  <a href="example_app.html">working example</a>.
+</p>
+
+<h2>NFT Owner Finder</h2>
+
+<p>
+  The app is an NFT owner finder. A frontend (a simple HTML page is
+  enough) for the ERC271 specification. You already used this spec in the previous lesson.
+</p>
+
+<p>
+  The idea is a user can enter a contract address and token ID, and the app will ask the
+  Ethereum network for the address of the token owner.
+</p>
+
+<p>
+  Bonus points for additional information you display in that app:
+</p>
+
+<ul>
+  <li>
+    ENS domain for the owners address. <i>(Hint: Ethers.js' provider has
+    <a href="https://docs.ethers.io/v5/api/providers/">some methods</a> for this)</i>
+  </li>
+  <li>
+    The metadata of the token. <i>(Hint: Check out the
+    <a href="https://eips.ethereum.org/EIPS/eip-721#specification">ERC271 spec</a> for a metadata
+    extension)</i>
+  </li>
+  <li>The image of the token if it's inside the metadata. <i>(Hint: It's an URL inside the metadata)</i></li>
+</ul>
+
+<h2>Conclusion</h2>
+
+<p>
+  This lesson concludes the first part of this course. You learned most of the things you can do
+  without your wallet.
+</p>
+
+<p>
+  You learned about the basic architecture of the Ethereum network how to connect to it via public
+  HTTP-Gateways and Ethers.js and how to do fundamental interactions with smart contracts on the chain.
+</p>
+
+<p>
+  You also got introduced to the Ethereum Name Service, which makes interactions with addresses
+  easier.
+</p>
+
+<p>
+  In this final lesson, you even build your first app!
+</p>
+
+<h2>What's Next?</h2>
+
+<p>
+  The next part of this course will introduce you to wallets and transactions, so you can finally 
+  make a change! You will do all this with test networks, so you don't have to pay the enormous gas
+  fees currently hampering the Ethereum network.
+</p>

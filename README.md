@@ -4,11 +4,18 @@ This course is in-progress and help is appreciated!
 
 ## Lessons
 
+### Part I
+
 - [00 Connecting to the Blockchain](https://kay-is.github.io/web3-from-zero/00-connect-to-blockchain.html)
 - [01 Reading an Address Data](https://kay-is.github.io/web3-from-zero/01-read-address-data.html)
 - [02 Connecting to Smart Contracts](https://kay-is.github.io/web3-from-zero/02-connect-to-contracts.html)
 - [03 Using the Ethereum Name Service](https://kay-is.github.io/web3-from-zero/03-using-ens.html)
 - [04 Ethereum Request for Comment](https://kay-is.github.io/web3-from-zero/04-erc.html)
+- [05 First Example App](https://kay-is.github.io/web3-from-zero/05-example-app.html)
+
+### Part II
+
+_TODO: Wallet & transactions_
 
 ## Ethereum Edition
 
