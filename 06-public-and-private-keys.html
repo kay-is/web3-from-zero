@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+
+<link rel="stylesheet" href="boilerplate/style.css" />
+
+<title>Web3 From Zero - Lesson 6</title>
+
+<h1>6. Public & Private Keys (DRAFT)</h1>
+
+<p>
+  I wanted to start part II of this course with wallets. Because a crypto wallet will be the 
+  software, you need to install and set up for part II. But I thought the keys are only a 
+  part of the things a wallet manages for you and the most important part. So, I think keys 
+  deserve their own lesson.
+</p>
+
+<blockquote>
+  This lesson won't go into the nitty-gritty details of elliptic curve cryptography (ECC). As you can
+  learn Web2 development with FreeCodeCamp; there are better resources to understand this topic.
+  "Practical Cryptography for Developers" is a free ebook with
+  <a href="https://cryptobook.nakov.com/asymmetric-key-ciphers/elliptic-curve-cryptography-ecc">
+    a chapter that explains ECC
+  </a> excellently.
+</blockquote>
+
+<h2>Security Considerations</h2>
+
+<p>
+  If I learned one thing about cryptography, it's that <b>you should never ever give away your
+  private key</b>. If you don't understand anything from the book mentioned above or written in this
+  chapter, at least keep that small piece of wisdom in mind.
+</p>
+
+<p>
+  This means only ever write your private key in a secure wallet application and never in a text 
+  file on your PC or smartphone. It's too long for the average human to memorize without
+  much effort, so your best bet is to write it down on paper, so nobody with access to your 
+  computers can read it from your filesystem.
+</p>
+
+<p>
+  In some countries, you might fear that the government will be after your keys, but the more likely
+  threat is your house burning down or water damage. So, make sure you have copies at different
+  secure locations.
+</p>
+
+<p>
+  Also, if you need a private key for development that you will hard-code in a source file for
+  tests, make sure that you use a dedicated development key that's only used for this purpose,
+  otherwise, your key could end up on GitHub, S3, etc.
+</p>
+
+<p>
+  The same goes for your seed phrase, which is a way to represent a private key as a list of short 
+  words. As a developer, you might interact with private keys directly, but most people usually use 
+  their private key in the form of a seed phrase when they move it around between wallets and
+  paper.
+</p>
+
+<p>
+  It's also worth mentioning that <b>you shouldn't throw around your addresses and public keys
+  mindlessly</b>. While nobody can directly steal your assets without your private key, an attacker
+  can send tokens to your address for phishing purposes. These could lead you to some web apps that
+  try to scam you into using your private key to do something dumb.
+</p>
+
+<h2>What are Keys?</h2>
+
+<p>
+  A key, private or public, is just some kind of information. In the specific case of ECC, these two 
+  keys are massive numbers. So big that you usually end up storing them as <code>string</code> or
+  <code>BigInteger</code>in JavaScript.
+</p>
+
+<figure>
+  <img src="images/ecc-keys.png">
+  <figcaption>
+    Figure 1: ECC Keys
+  </figcaption>
+</figure>
+
+<h3>Private Key</h3>
+
+<p>
+  A private key for ECC is a randomly generated integer that can look something like this<br>
+  <code>57cfa2d774eab59998a0b87d641b504aaefeae12f244db08d77e019e6d90afb9</code>
+</p>
+  
+<p>
+  In Ethereum and many other blockchain networks, this key must be smaller than a predefined prime number.
+</p>
+
+<p>
+  This big number looks like this in hexadecimal: <br>
+  <code>fffffffffffffffffffffffffffffffffffffffffffffffffffffffefffffc2f</code><br>
+  And like this in decimal: <br>
+  <code>115792089237316195423570985008687907853269984665640564039457584007908834671663</code>
+</p>
+
+<p>
+  The reason for this specific number is out of the scope of this course, but you can read about
+  it in the book I linked at the beginning of this lesson. But this limit is important because not
+  every random integer is a valid private key, and if you want to generate your own, you have to
+  stay under it.
+</p>
+
+<pre>
+  let privateKey
+
+  do {
+    privateKey = generateRandomInteger()
+  } while(privateKey > 0xfffffffffffffffffffffffffffffffffffffffffffffffffffffffefffffc2fn)
+</pre>
+
+<h3>Public Key</h3>
+
+<p>
+  A public key for ECC consists of two integers that are concatenated together. Both of these
+  integers can have the private key length, but they aren't random. These two numbers are
+  calculated from the private key.
+</p>
+
+<p>
+  A public key can look like this:<br>
+  <code>0453a07319d6d7a34d1bf3363415a316c0f5cd4cb5fe49f414b1c9d7b420169b652cf466ed56ec01733a9726ee27017ad66e384eefc2d6897aa61d3157cc1273eb</code>
+</p>
+
+<p>
+  The function used to calculate a public key from a private key is based on a specific
+  algorithm and some predefined parameters. All systems interacting with the Ethereum network have
+  to use the same algorithm and parameters to get the same results.
+</p>
+
+<pre>
+  let privateKey
+
+  do {
+    privateKey = generateRandomInteger()
+  } while(privateKey > 0xfffffffffffffffffffffffffffffffffffffffffffffffffffffffefffffc2fn)
+
+  const publicKey = generatePublicKey(privateKey)
+</pre>
+
+
+<h3>Address</h3>
+
+<p>
+  In part I, you learned that addresses are to a blockchain are like IPs are to the internet, but
+  how are addresses related to keys?
+</p>
+
+<p>
+  An address is a 20 byte long integer that gets calculated from the public key and it can look like 
+  this:<br>
+  <code>0xdd00Cc906B93419814443Bb913949d503B3DF3c4</code>
+</p>
+
+<p>
+  The 0x usually indicates a hex number, and the length was chosen to allow for enough addresses in 
+  the future while still being short enough for everyday usage.
+</p>
+
+<p>
+  The public key gets hashed with Keccak256, and the first 20 bytes of this hash become the address
+  for an externally owned account (EOA) controlled by the related key pair.
+</p>
+
+<pre>
+  let privateKey
+
+  do {
+    privateKey = generateRandomInteger()
+  } while(privateKey > 0xfffffffffffffffffffffffffffffffffffffffffffffffffffffffefffffc2fn)
+
+  const publicKey = generatePublicKey(privateKey)
+
+  const address = keccak256(publicKey).toString().slice(0,20)
+</pre>
+
+<h3>Seed Phrase</h3>
+
+<p>
+  A seed phrase, also known as a secret recovery phrase, is a list of 12-24 short random words used to generate one or more private keys and, in turn, public keys and addresses in the end.
+</p>
+
+<p>
+  A seed phrase could look like this:<br>
+  <code>forget wing follow flip swallow achieve correct view dinner witness hybrid proud</code>
+</p>
+
+<p>
+  While you can generate a private key directly, many wallet applications use a seed phrase to 
+  generate them for you. Many people use multiple addresses, and if you're developing with Ethereum
+  and using it for day-to-day things, you will at least need two addresses and, in turn, private
+  keys.
+</p>
+
+<p>
+  The idea is that not every private key is random, but only the seed phrase they are generated
+  from. This allows to generate multiple keys from one phrase and, in turn, recover all these keys 
+  from the seed phrase. Otherwise, you would have to write down every private key you used on its
+  own. 
+</p>
+
+<pre>
+  const seedPhrase = [
+    "forget", "wing", "follow",
+    "flip", "swallow", "achieve",
+    "correct", "view", "dinner",
+    "witness", "hybrid", "proud"
+  ]
+
+  const keyGenerator = initKeyGenerator(seedPhrase)
+  
+  const keys = []
+  for(let i = 0; i < 10; ++i) {
+    const privateKey = keyGenerator(i)
+    const publicKey = generatePublicKey(privateKey)
+    const address = keccak256(publicKey).toString().slice(0,20)
+    keys.push({ privateKey, publicKey, address})
+  }
+</pre>
+<br>
+
+<p>
+  The downside of this is that if your seed phrase gets stolen, all addresses generated from it are 
+  compromised. This means everything true for your private key is also true ten-fold for
+  your seed phrase because it essentially represents multiple private keys.
+</p>
+  
+<p><b>Never write your seed phrase down on your PC or smartphone outside of your wallet apps, never
+  store it in an S3 bucket, or GitHub, etc.</b> To recover your keys when you lose your devices, or
+  they break, you can write the seed phrase on a piece of paper and store it in a secure location.
+</p>
+
+<h2>What are the Keys Used for?</h2>
+
+<p>
+  So, you know what the keys are and how you should handle them, but what exactly is their purpose?
+</p>
+
+<p>
+  The private and public keys are used for different tasks. Their usage follows from the fact that
+  everyone can potentially have your public keys, and no one should ever have your private key.
+</p>
+
+<p>
+  The private key is used mainly to sign data. Signing means you attach a signature to the data. 
+  A signature is created with a signature algorithm that uses your private key and the data that
+  needs to be signed.
+</p>
+
+<p>
+  A signature could look like this in its Base64 version:<br>
+  <code>MEQCIEamErEp0wjW2nBCwPJyMWB1UEb8UHaEFeUDko88MOs/AiB5daIS5j1stXRetBsEWbvd0TeoYsfucmADmxFUxbE2oQ==</code>
+</p>
+
+
+<p>
+  The public key is used to verify that signature. If you sign something with a private key, the 
+  related public key, in combination with the signing algorithm, the signature, and the signed data,
+  will either lead to a "yes, this signature is from the correct private key" or not.
+</p>
+
+<p>
+  Since you are the only one who should have your private keys, you are the only one who can create 
+  these signatures. If it gets stolen, other people can pretend they are the original owners (i. e. 
+  you). If you lose your private key, you can't create correct signatures anymore, and systems 
+  with your public key won't believe that you are indeed who you pretend to be.
+</p>
+
+<figure>
+  <img src="images/signature.png">
+  <figcaption>
+    Figure 2: Signing and verification
+  </figcaption>
+</figure>
+
+<h2>Example: Spending Tokens</h2>
+
+<p>
+  Let's say you want to spend tokens from an address.
+</p>
+  
+<p> 
+  You tell the Ethereum network your intent, and it will send you a message that you need to sign
+  with your private key. Since the address is created from your public key, and the public key is
+  created from a private key, Ethereum knows if your signature belongs to that address. 
+</p>
+
+<p>
+  When you create a signature and give Ethereum a public key to verify it, Ethereum can run the
+  Keccak256 hash on your public key and compare it with the address.
+</p>
+
+<p>
+  If the address doesn't match the public key, Ethereum doesn't care that your signature matches 
+  your public key.
+</p>
+
+<p>
+  If your public key matches the address, but the signature can't be verified with that public key,
+  Ethereum concludes that you don't own that address.
+</p>
+
+<h2>Conclusion</h2>
+
+<p>...</p>
