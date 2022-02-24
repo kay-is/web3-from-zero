@@ -7,39 +7,38 @@
 <h1>1. Reading Address Data</h1>
 
 <p>
-  Addresses form the core of blockchains. What IPs are for the Internet address are for the
-  blockchain. Smart contracts and externally owned accounts, short EOAs, are the targets of those
-  addresses.
+  Addresses are the heart of blockchains. What IPs are for the Internet, addresses are for the
+  blockchain. Addresses point to smart contracts and externally owned accounts (EOAs).
 </p>
 
 <p>
-  An address is 20 byte number derived from a public key and is usually displayed as 40 hex digits.
-  They look something like this <code>0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045</code>. More on
-  that later.
+  An address number of the length of 20 bytes build from a public key and is usually shown as 40 hex
+  digits. They look something like this <code>0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045</code>.
 </p>
 
 <blockquote>
-  <b>Note: </b>An address is used to send and receive data or funds. The money is gone when you send
-  tokens to the wrong address because of a typo. So always save you have the correct address.
-  <b>Nobody can recover you from such an error!</b>
+  <b>Note: </b>An address is used to send and receive data or money, in the form of tokens. Your
+  money is gone when you send tokens to the wrong address because of a fault. Always check you have
+  the correct address. <b>No one can help you to get your money back!</b>
 </blockquote>
 
 <p>
-  A smart contract is a program deployed on the blockchain and autonomously executed by nodes
-  (computers) that make up the Ethereum network.
-</p>
-  
-<p>
   An EOA is an address controlled by a private/public key pair owner from outside the Ethereum
-  network; thus, the name <b>externally</b> owned account. Usually, you use wallet software to
-  manage EOA keys and addresses.
+  network; thus, the name <b>externally</b> owned account. Usually, you use a crypto-wallet to
+  manage keys and addresses.
 </p>
 
 <p>
-  These addresses, both smart contracts and EOAs, have data associated with them. The Ethereum
-  blockchain stores this data, and you can read and write it if you have the correct permissions. In
-  this lesson, you will just read data. As you can see in Figure 1, you can't write on the
-  blockchain without a wallet.
+  A smart contract is software running on the nodes (computers) that make up the blockchain network.
+  The owner of a smart contract can be another smart contract or an EOA. That's why a smart contract
+  isn't externally owned.
+</p>
+
+<p>
+  These addresses, both smart contracts and EOAs, have data tied to them. The Ethereum blockchain
+  stores this data, and you can read and write it if you have the right permissions. In this lesson,
+  you will just read data. As you can see in Figure 1, you can't write on the blockchain without a
+  crypto-wallet.
 </p>
 
 <figure>
@@ -53,9 +52,9 @@
 <h2>Reading the Transaction Count of an Address</h2>
 
 <p>
-  To read data, you need an Ethers.js provider but also a target address. Let's start with the
-  transaction (TX) count. It's a simple numeric value stored on the chain for every address that was
-  part of such a TX. It gets incremented by 1 if another TX with that address happens.
+  To read data, you need an Ethers.js provider but also an address. Let's start with the transaction
+  (TX) count. It's a simple number stored on the blockchain for every address that was part of such
+  a TX. Ethereum adds 1 to the number if another TX with that address happens.
 </p>
 
 <p>
@@ -64,7 +63,7 @@
 </p>
 
 <p>
-  Try it out in the editor! Call the method and <code>print</code> its result. The method expects an
+  Try it out in the editor! Call the method and <code>print</code> its output. The method expects an
   address as <code>string</code> argument, so here a few you can use:
 </p>
 
@@ -96,13 +95,12 @@
 <h2>Reading the Balance at an Address</h2>
 
 <p>
-  Reading the balance of an address is a bit more complex than reading the TX count.
+  Reading the balance of an address is a bit harder than reading the TX count.
 </p>
 
 <p>
-  Both, smart contracts and EOAs, have an Ether balance, the native currency, or more precisely, the
-  <b>native token</b> of the Ethereum network. Ether's primary use-case is paying for TX fees on the
-  Ethereum network.
+  Smart contracts and EOAs, have an Ether balance, the native money or the <b>native token</b> of
+  the Ethereum network. Ether is what you have to pay to do TXs on the Ethereum network.
 </p>
 
 <p>
@@ -111,7 +109,7 @@
 </p>
 
 <p>
-  Try it out in the editor! Call the method and <code>print</code> its result. The method expects an
+  Try it out in the editor! Call the method and <code>print</code> its output. The method expects an
   address as <code>string</code> argument, so here a few you can use:
 </p>
 
@@ -142,33 +140,32 @@
 </code-editor>
 
 <p>
-  So, we got the balance, but why does it look like that?
+  We got the balance, but why does it look like that?
 </p>
 
 <h2>The BigNumber Type</h2>
 
 <p>
-  Ethers.js packaged the balance with its own <code>BigNumber</code> type, because the value is too
-  big for JavaScript's <code>Number</code> type to store. You have to convert the balance to a string
-  with the right amount of decimal points to display it in a human-readable way.
+  Ethers.js wrapped the balance in its own <code>BigNumber</code> type, because the number can be
+  too big for JavaScript's <code>Number</code> type to store. You have to change the balance to a
+  <code>string</code> with the right number of decimal points to display it in a clear way.
 </p>
 
 <p>
-  One of the main differences between Ethereum and JavaScript are number types. For a long time,
-  every numerical value was of type <code>Number</code> in JavaScript, which is a double-precision
-  (64bit) floating-point format</double-precisi>. Every numerical value <b>was</b> stored like that,
-  because some time ago it got a new number type called 
+  One of the biggest things that make Ethereum different from JavaScript are number types. For a
+  long time, every number was of type <code>Number</code> in JavaScript, which is a double-precision
+  (64bit) floating-point . Every number <b>was</b> stored like that, because some time ago it got a
+  new number type called 
   <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/BigInt" target="_blank">
-  <code>BigInt</code></a> for very large integer values.
+  <code>BigInt</code></a> for very large integer numbers.
 </p>
 
 <p>
-  Everything is an integer in Solidity, the programming language to develop smart contracts for
-  Ethereum. Solidity is mainly concerned with payment, and floating-point values have some quirks
-  that can cost you money, so they opted for going integer only. Solidity always stores numbers as
-  integers, and the most common type is <code>uint256</code> (alias <code>uint</code>) which can
-  store 78 decimal digits. In comparison, JavaScript's <code>Number</code> type can only store 16
-  digits. 
+  Everything is an integer number in Solidity, the language used to make smart contracts for
+  Ethereum. Solidity is concerned with money, and floating-point has problems that can cost you
+  money, so they went for integer numbers only. Solidity always stores numbers as integers, and the
+  most used type is <code>uint256</code> (also known as <code>uint</code>) which can store 78
+  decimal digits. JavaScript's <code>Number</code> type can only store 16 digits. 
 </p>
 
 <p>
@@ -179,9 +176,9 @@
 </p>
 
 <p>
-  Since Ethers.js wants to be backwards compatible with older JavaScript versions that don't support 
-  <code>BigInt</code>, they implemented their own integer type called <code>BigNumber</code>. It
-  comes with <a href="https://docs.ethers.io/v5/api/utils/bignumber/#BigNumber--methods" target="_blank">
+  Since Ethers.js wants to keep working with older browsers that don't support  <code>BigInt</code>,
+  they made their own integer type called <code>BigNumber</code>. It comes with
+  <a href="https://docs.ethers.io/v5/api/utils/bignumber/#BigNumber--methods" target="_blank">
   methods for basic arithmetics</a>, but can also be converted to <code>String</code> or
   <code>BigInt</code> when needed.
 </p>
@@ -189,8 +186,8 @@
 <h2>Converting to a Readable Format</h2>
 
 <p>
-  The last exercise yielded a <code>BigNumber</code> object that isn't easily human-readable. While
-  it's enough to work with the value inside of our code, you should convert it to a 
+  The last exercise gave you a <code>BigNumber</code> object that isn't easy to understand. While
+  it's enough to work with the value inside of our code, you should change it to a 
   <code>String</code> before you show it to a user.
 </p>
 
@@ -208,7 +205,7 @@
 
 <p>
   The <code>formatUnits</code> function can be found in the <code>ethers.utils</code> object. This
-  time it returns the result right away, so no <code>await</code> required.
+  time it returns the output right away, so no <code>await</code> needed.
 </p>
 
 <code-editor>
@@ -225,17 +222,17 @@
 <h2>Conclusion</h2>
 
 <p>
-  In this lesson, you learned that addresses are the fundament of the Ethereum blockchain and that 
-  externally owned accounts and smart contracts are the targets of those addresses.
+  In this lesson, you learned that addresses are the heart of the Ethereum blockchain and point to
+  externally owned accounts and smart contracts.
 </p>
 
 <p>
-  Addresses are 160 bits or 20 bytes, integers usually displayed as 40 hex digits, and JavaScript
-  can't store them in its native <code>Number</code> type because it's only 8 bytes big. The same
-  goes for token balances, which can have more than 16 digits a <code>Number</code> could store.
+  Addresses are 160 bits or 20 bytes integer numbers usually shown as 40 hex digits, and JavaScript
+  can't store them in its <code>Number</code> type because it's only 8 bytes big. The same is true
+  for token balances, which can have more than the 16 digits a <code>Number</code> could store.
 </p>
 
 <p>
-  In <a href="02-connect-to-contracts.html">the next lesson</a>, you will learn how to interact with
-  smart contracts.
+  In <a href="02-connect-to-contracts.html">the next lesson</a>, you will learn how to use smart
+  contracts from the frontend.
 </p>
