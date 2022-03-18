@@ -38,8 +38,8 @@ You only need a modern browser and that's it.
 The second part is about getting more interactive, you will need to install a wallet extension to
 your browser and create your first accounts.
 
-- [06 Public & Private Keys (DRAFT)](https://kay-is.github.io/web3-from-zero/06-public-and-private-keys.html)
-- 07 Externally Owned Accounts
+- [06 Public & Private Keys](https://kay-is.github.io/web3-from-zero/06-public-and-private-keys.html)
+- [07 Externally Owned Accounts (DRAFT)](https://kay-is.github.io/web3-from-zero/07-externally-owned-accounts.html)
 - 08 Crypto Wallet Setup
 - 09 Test Networks for Development
 - 10 Sending Transactions

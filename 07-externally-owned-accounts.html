@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+
+<link rel="stylesheet" href="boilerplate/style.css" />
+
+<title>Web3 From Zero - Lesson 7</title>
+
+<h1>7. Externally Owned Accounts</h1>
+
+<h3>Address</h3>
+
+<p>
+  In part I, you learned that addresses are to a blockchain are like IPs are to the internet, but
+  how are addresses related to keys?
+</p>
+
+<p>
+  An address is a 20 byte long integer that gets calculated from the public key and it can look like 
+  this:<br>
+  <code>0xdd00Cc906B93419814443Bb913949d503B3DF3c4</code>
+</p>
+
+<p>
+  The 0x usually indicates a hex number, and the length was chosen to allow for enough addresses in 
+  the future while still being short enough for everyday usage.
+</p>
+
+<p>
+  The public key gets hashed with Keccak256, and the first 20 bytes of this hash become the address
+  for an externally owned account (EOA) controlled by the related key pair.
+</p>
+
+<pre>
+  let privateKey
+
+  do {
+    privateKey = generateRandomInteger()
+  } while(privateKey > 0xfffffffffffffffffffffffffffffffffffffffffffffffffffffffefffffc2fn)
+
+  const publicKey = generatePublicKey(privateKey)
+
+  const address = keccak256(publicKey).toString().slice(0,20)
+</pre>
+
+
+
+<h2>Example: Spending Tokens</h2>
+
+<p>
+  Let's say you want to spend tokens from an address.
+</p>
+  
+<p> 
+  You tell the Ethereum network your intent, and it will send you a message that you need to sign
+  with your private key. Since the address is created from your public key, and the public key is
+  created from a private key, Ethereum knows if your signature belongs to that address. 
+</p>
+
+<p>
+  When you create a signature and give Ethereum a public key to verify it, Ethereum can run the
+  Keccak256 hash on your public key and compare it with the address.
+</p>
+
+<p>
+  If the address doesn't match the public key, Ethereum doesn't care that your signature matches 
+  your public key.
+</p>
+
+<p>
+  If your public key matches the address, but the signature can't be verified with that public key,
+  Ethereum concludes that you don't own that address.
+</p>
