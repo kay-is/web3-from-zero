@@ -6,6 +6,16 @@
 
 <h1>7. Externally Owned Accounts</h1>
 
+<p>
+  In the last lesson we talked about keys, what they are, how they are used, and how they relate to 
+  each other.
+</p>
+
+<p>
+  In this lesson, you will learn how keys are related to addresses and how they together form the 
+  basis for externally owned accounts (EOAs).
+</p>
+
 <h3>Address</h3>
 
 <p>
@@ -14,10 +24,17 @@
 </p>
 
 <p>
-  An address is a 20 byte long integer that gets calculated from the public key and it can look like 
-  this:<br>
+  An address is a 20 byte (160 bit) long integer that gets calculated from the public key and it can
+  look like this:<br>
   <code>0xdd00Cc906B93419814443Bb913949d503B3DF3c4</code>
 </p>
+
+<figure>
+  <img src="images/ecc-keys.png">
+  <figcaption>
+    Figure 1: ECC Keys
+  </figcaption>
+</figure>
 
 <p>
   The 0x usually indicates a hex number, and the length was chosen to allow for enough addresses in 
@@ -25,8 +42,11 @@
 </p>
 
 <p>
-  The public key gets hashed with Keccak256, and the first 20 bytes of this hash become the address
-  for an externally owned account (EOA) controlled by the related key pair.
+  The public key gets hashed with
+  <a href="https://cryptobook.nakov.com/cryptographic-hash-functions/secure-hash-algorithms#sha-3-sha3-256-sha3-512-keccak-256">
+    Keccak-256
+  </a>, and the first 20 bytes of this hash become the address for an EOA controlled by the related
+  key pair.
 </p>
 
 <pre>
@@ -40,32 +60,71 @@
 
   const address = keccak256(publicKey).toString().slice(0,20)
 </pre>
+<br>
 
+<p>
+  From this relation between address and public key follows that all the nodes of the Ethereum 
+  network can verify your transactions. 
+</p>
 
-
-<h2>Example: Spending Tokens</h2>
+<h2>Spending Tokens</h2>
 
 <p>
   Let's say you want to spend tokens from an address.
 </p>
-  
-<p> 
-  You tell the Ethereum network your intent, and it will send you a message that you need to sign
-  with your private key. Since the address is created from your public key, and the public key is
-  created from a private key, Ethereum knows if your signature belongs to that address. 
+
+<p>
+  You have to send your address, the target address, and the amount of funds you want to spend to
+  the Ethereum network. You have to send your public key too, so the nodes on the network can verify
+  that it's a legit transaction.
 </p>
 
 <p>
-  When you create a signature and give Ethereum a public key to verify it, Ethereum can run the
-  Keccak256 hash on your public key and compare it with the address.
+  Since your address is generated from your public key, Ethereum network knows if you send a key
+  that doesn't belong to your address. So, no cheating here by sending fake public keys.
 </p>
 
 <p>
-  If the address doesn't match the public key, Ethereum doesn't care that your signature matches 
-  your public key.
+  The Ethereum network will send you a random message you have to sign with your private key, and
+  use your public key later to verify that you actually have the correct key. If you don't have the 
+  required private key, the network will assume you're not the address owner and refuse the
+  transaction.
 </p>
 
 <p>
-  If your public key matches the address, but the signature can't be verified with that public key,
-  Ethereum concludes that you don't own that address.
+  The risk here is a wrong target address. The Ethereum network will take any vaild address as a 
+  target for your transaction. If you make a typo, your funds may end up at an address that no one
+  has a private key for and they are lost.
 </p>
+
+<h2>Receiving Tokens</h2>
+
+<p>
+  Receiving tokens is more easy, but doesn't come without risk either. 
+</p>
+
+<p>
+  Anyone can send funds to any valid address. So, if someone knows your address, they can send you 
+  tokens, wether you like it or not. 
+</p>
+
+<p>
+  The usual case is that you sold a good or service, and someone will pay you by sending tokens to 
+  your address. You have to make sure your address doesn't have any typos, but that's it.
+</p>
+
+<p>
+  Special cases are airdrops. When a project or person does an airdrop, it means they send tokens to
+  addresses that have specific criteria. Like, used a service, or held a special NFT before some
+  date. 
+</p>
+
+<p>
+  Usually an airdrop is a good thing, because you get free tokens. But scammers use airdrops to
+  phish you. They randomly send you some token which might lead you to investigate. You can end up
+  on a suspicious site that asks you for your private key or to sign a scam transaction.
+</p>
+
+<h2>Conclusion</h2>
+
+...
