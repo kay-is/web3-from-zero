@@ -18,6 +18,6 @@
   },
   "homepage": "https://github.com/kay-is/web3-from-zero#readme",
   "devDependencies": {
-    "http-server": "^14.0.0"
+    "http-server": "^14.1.0"
   }
 }
