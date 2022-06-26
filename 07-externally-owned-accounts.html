@@ -16,10 +16,10 @@
   basis for externally owned accounts (EOAs).
 </p>
 
-<h3>Address</h3>
+<h3>Address Recap</h3>
 
 <p>
-  In part I, you learned that addresses are to a blockchain are like IPs are to the internet, but
+  In Part I, you learned that addresses are to a blockchain are like IPs are to the internet, but
   how are addresses related to keys?
 </p>
 
@@ -62,39 +62,75 @@
 </pre>
 <br>
 
+<h2>How do Addresses Relate to Externally Owned Accounts?</h2>
+
 <p>
-  From this relation between address and public key follows that all the nodes of the Ethereum 
-  network can verify your transactions. 
+  As the name implies, an EOA is an account that is controlled from outside the blockchain network. 
+  The private key that was used to create the address isn't on chain and the person owning it is
+  also external to the blockchain network.
+</p>
+
+<p>
+  The arrows in figure 2 show who controls which address and where, in relation to the blockchain 
+  network, each controller is located. 
+</p>
+
+<figure>
+  <img src="images/externally-owned-account.png">
+  <figcaption>
+    Figure 2: Externally Owned Account
+  </figcaption>
+</figure>
+
+<p>
+  The address controlled by an external private key is an EOA, the other addresses are controlled by 
+  smart contracts, and thus, not EOA.
 </p>
 
 <h2>Spending Tokens</h2>
 
 <p>
-  Let's say you want to spend tokens from an address.
+  Now, that we know how keys relate to addresses and what EOAs are, let's look at an example. Say 
+  you want to send tokens from one address to another.
 </p>
 
 <p>
-  You have to send your address, the target address, and the amount of funds you want to spend to
+  You have to send your address, the target address, and the amount of tokens you want to spend, to
   the Ethereum network. You have to send your public key too, so the nodes on the network can verify
   that it's a legit transaction.
 </p>
 
 <p>
-  Since your address is generated from your public key, Ethereum network knows if you send a key
-  that doesn't belong to your address. So, no cheating here by sending fake public keys.
+  The transaction is checked for two facts.
+</p>
+
+<ol>
+  <li>Does the transaction include the correct public key?</li>
+  <li>Do you own the private key related to this public key?</li>
+</ol>
+
+<p>
+  Since your address is generated from your public key, the Ethereum nodes know if you send a key
+  that doesn't belong to your address. They can run the hash algorithm on the public key, look at
+  the first 20 bytes, and compare them to your address.
 </p>
 
 <p>
-  The Ethereum network will send you a random message you have to sign with your private key, and
-  use your public key later to verify that you actually have the correct key. If you don't have the 
-  required private key, the network will assume you're not the address owner and refuse the
-  transaction.
+  The next step is to verify that you also have the correct private key. Only private key owners can
+  spend money of an address.
 </p>
 
 <p>
-  The risk here is a wrong target address. The Ethereum network will take any vaild address as a 
-  target for your transaction. If you make a typo, your funds may end up at an address that no one
-  has a private key for and they are lost.
+  To check this, the nodes will send you a random message and you will sign it with the private key 
+  you used to generate the public key. Since they already have your public key, they can use it to
+  check if your signature is correct. If you used the wrong private key to sign, this check will
+  fail and your trasaction will be rejected.
+</p>
+
+<p>
+  There is still risk here. The Ethereum network will take any vaild address as a target for your
+  transaction. If you make a typo, your funds may end up at an address that no one has a private key
+  for and they are lost.
 </p>
 
 <h2>Receiving Tokens</h2>
@@ -125,6 +161,20 @@
   on a suspicious site that asks you for your private key or to sign a scam transaction.
 </p>
 
-<h2>Conclusion</h2>
+<h2>Summary</h2>
 
-...
+<p>
+  EOAs are addresses controlled by an external private key instead of a on-chain smart contract.
+</p>
+
+<p>
+  The relation between private key, public key, and address allows the blockchain network to verify 
+  all transactions can only come from controllers of the correct private keys.
+</p>
+
+<p>
+  Sending tokens around still bears the risk of typos. Also, when you lose your private key or it 
+  gets stolen, all tokens on that address are lost. This is especially crucial for developers! Make 
+  sure you always use private keys dedicated to development only, so if you accidentally upload them 
+  to a public code repository, nothing of value is stolen.
+</p>
