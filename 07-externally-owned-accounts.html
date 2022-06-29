@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 
 <link rel="stylesheet" href="boilerplate/style.css" />
+<script type="module" src="boilerplate/editor.js"></script>
 
 <title>Web3 From Zero - Lesson 7</title>
 
@@ -49,18 +50,50 @@
   key pair.
 </p>
 
-<pre>
-  let privateKey
+<h2>Exercise: Create an Address from a Public Key With Ethers</h2>
 
-  do {
-    privateKey = generateRandomInteger()
-  } while(privateKey > 0xfffffffffffffffffffffffffffffffffffffffffffffffffffffffefffffc2fn)
+<p>
+  Ethers comes with a few utility functions that allow you to create an address from a public key
+  step by step.
+</p>
 
-  const publicKey = generatePublicKey(privateKey)
+<p>
+  The example comes with a random pair of keys, and you have to create the address yourself. Keep in 
+  mind that the public key comes with a <code>0x04</code> prefix that indicates its in the 
+  uncompressed version and is not part of the key.
+</p>
 
-  const address = keccak256(publicKey).toString().slice(0,20)
-</pre>
-<br>
+<p>
+  The functions you need are:
+</p>
+
+<ul>
+  <li><code>ethers.utils.hexDataSlice()</code> to cut parts of the key and hash.</li>
+  <li><code>ethers.utils.keccak256()</code> to create the hash that includes the address.</li>
+</ul>
+
+<p>
+  You can look at <code>wallet.address</code> to check if the key is correct.
+</p>
+
+<code-editor>
+  const { hexDataSlice, keccak256 } = ethers.utils
+  const { address, privateKey, publicKey } = ethers.Wallet.createRandom()
+
+  // Write your code here!
+  <p>
+    const keyWithoutPrefix = hexDataSlice(publicKey, 1) // remove 0x04
+    const hashedKey = keccak256(keyWithoutPrefix)
+    const myAddress = hexDataSlice(hashedKey, 12)
+    print(address)
+    print(myAddress)
+  </p>
+</code-editor>
+
+<p>
+  Ethereum uses letter casing in the address as a checksum. While the addresses work independently 
+  of casing, it is sometimes used to check the integrity of an address.
+</p>
 
 <h2>How do Addresses Relate to Externally Owned Accounts?</h2>
 

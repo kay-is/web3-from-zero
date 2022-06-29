@@ -61,7 +61,7 @@ customElements.define(
 
       let cleared = false
       const print = (data) => {
-        const content = JSON.stringify(data, null, 2)
+        const content = JSON.stringify(data, null, 2) + "\n"
         if (cleared) {
           outputElement.innerHTML += content
           return
