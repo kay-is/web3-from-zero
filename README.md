@@ -40,7 +40,7 @@ your browser and create your first accounts.
 
 - [06 Public & Private Keys](https://kay-is.github.io/web3-from-zero/06-public-and-private-keys.html)
 - [07 Externally Owned Accounts](https://kay-is.github.io/web3-from-zero/07-externally-owned-accounts.html)
-- 08 Crypto Wallet Setup
+- [08 Crypto Wallet Setup (DRAFT)](https://kay-is.github.io/web3-from-zero/08-crypto-wallet-setup.html)
 - 09 Test Networks for Development
 - 10 Sending Transactions
 - 11 Second Example App

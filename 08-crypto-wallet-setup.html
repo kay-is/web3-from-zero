@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+
+<link rel="stylesheet" href="boilerplate/style.css" />
+<script type="module" src="boilerplate/editor.js"></script>
+
+<title>Web3 From Zero - Lesson 8</title>
+
+<h1>8. Crypto Wallet Setup</h1>
+
+<p>
+  So, we know how public key cryptography works, even if just in essence. And we know that a EOA is 
+  a blockchain address that is controlled by the holder of a related public/private key pair. But 
+  how come crypto wallets into play?
+</p>
+
+<h2>What is a Crypto Wallet?</h2>
+
+<p>
+  A crypto wallet, or simply wallet, is a mechanism to manage your keys, some are even able to
+  manage your blockchain connections.
+</p>
+
+<p>
+  There are different types of wallets, so let's get a small overview on the essentials.
+</p>
+
+<h3>1. Wallet App</h3>
+
+<p>
+  A wallet app is a dedicated application that manages your keys and blockchain connections. Some 
+  can connect to different types of blockchains, some only understand one specific blockchain 
+  network.
+</p>
+
+<p>
+  Since a wallet app is software, it comes with the danger of being hacked if it's installed on a 
+  device that has an internet connection.
+</p>
+
+<p>
+  MetaMask is probably the most popular wallet app for the Ethereum network. You can enter your keys
+  into it, or even let it generate keys for your with a seed phrase. It allows you to add and remove
+  HTTP gateways for different chains, and comes preconfigured with Ethereum mainnet and it's test 
+  networks.
+</p>
+
+<p>
+  To connect a wallet app with a Web3 app, you either need a browser extension that links the wallet 
+  you installed on your PC or Mac with the browser or, if you're using the mobile version, you need 
+  to scan a QR code displayed on the Web3 app.
+</p>
+
+<h3>2. Paper Wallet</h3>
+
+<p>
+  A paper wallet is simply a piece of paper with all your keys, addresses, or your seed phrase
+  written down. It can't do much, since it's no software, but at least you don't have to remember 
+  all this information on your own. 
+</p>
+
+<p>
+  With a paper wallet you can't send any tokens, but if you tell people one of the addresses you 
+  written on it, you can at least receive assets.
+</p>
+
+<p>
+  Also, it can't get hacked online, because it can't be connected to the internet. This makes 
+  paper wallet quite safe. Depending on the material of the wallet and the risk of burglaries in 
+  your location, it can be susceptible to other problems. Also, like everything else, you can simply 
+  lose it.  
+</p>
+
+<h3>3. Hardware Wallets</h3>
+
+<p>
+  Hardware wallets are devices that store your keys, addresses, and seed phrases. They keep your 
+  private keys always on the device and never make them public. If you need to sign a message with a 
+  private key, you have to send the message to the wallet and it will respond with the signature.
+</p>
+
+<p>
+  Hardware wallets have standardized interfaces and work in tandem with wallet apps. So, you can see
+  them as an extension of a wallet app that makes it more secure.
+</p>
+
+
+<h3>4. Programmatic Wallet</h3>
+
+<p>
+  Since all these digital wallets talk to each other and DApps via standardized interfaces, it might
+  not come as a surprise that there is an API for this. Ethers.js has the concept of Signers, which 
+  are an abstraction over different account types. One of them is <code>Wallet</code>.
+</p>
+
+<p>
+  <code>Wallet</code> is a class you can create an object from that works directly with a gateway.
+  This way you can actually write something on the blockchain without installing some additional 
+  software!
+</p>
+
+<h2>Recap of the Blockchain Network Connection</h2>
+
+<p>
+  In Part 1 of this course, we talked about how crypto wallets form a layer between your browser and
+  the blockchain network of your choice. Figure 1 shows where a wallet is usually located in the 
+  stack.
+</p>
+
+<p>
+  The blockchain connection with wallet part of the image shows that the wallet handles the 
+  connection to the gateway, and the browser doesn't know anything about it.
+</p>
+
+<figure>
+  <img src="images/blockchain-connection-ethersjs.png" />
+  <figcaption>
+    Figure 1: Blockchain connection with Ethers.js
+  </figcaption>
+</figure>
+
+<p>
+  As you just learned, Ethers.js can work as a wallet too! So, we can connect to a gateway with Ethers.js and also use it to sign transactions, which are the
+  mechanism to write on the blockchain.
+</p>
+
+<h2>Creating a Development Key</h2>
+
+<p>
+  If you're developing with a blockchain, never use private keys that control addresses with your 
+  personal assets on it!
+</p>
+
+<p>
+  Create one or more development keys, via a seed phrase or the random key generator of 
+  Ethers.js. 
+</p>
+
+<p>
+  If you have to do transactions in development that require tokens, be it for deployments or simply 
+  to test your code on testnets, you need to save the keys somewhere for later use. If you don't 
+  need any tokens for an action, you can just take a new random <code>Wallet</code> every time.
+</p>
+
+<p>
+  The following example creates a random <code>Wallet</code> every time you run it. Copy one of the 
+  private keys and use it as your development key.
+</p>
+
+<code-editor>
+  const wallet = ethers.Wallet.createRandom()
+  print(wallet.privateKey)
+</code-editor>
+
+<blockquote>
+  You shouldn't copy your private keys around and save them in an insecure way, but since a
+  development key doesn't have any tokens, it's not a problem if it gets stolen. Just create a new
+  one and delete the old one if that happens.
+</blockquote>
+
+<h2>Connecting to a Testnet</h2>
+
+<p>
+  Testnets are blockchain networks that don't use secure consensus algorithms like proof-of-work, or
+  proof-of-stake. Otherwise, they have the same APIs and allow all the interactions of mainnet, the 
+  <b>real</b> blockchain network of Ethereum.
+</p>
+
+<p>
+  This means, all testnet tokens are worthless and you can get them via faucets. These are websites 
+  where you enter an address and they will send you tokens.
+</p>
+
+<p>
+  This is why you had to copy a private key in the example above. You need an address you can reuse 
+  so you can get tokens on it and spend them for gas or to do transactions that require payment.
+</p>
