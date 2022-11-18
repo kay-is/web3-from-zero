@@ -20,14 +20,14 @@ figure > img {
 
 [data-editor-execute] {
   float: left;
-  width: 85%;
+  width: 80%;
   margin-top: 0;
   font-size: large;
   font-weight: bold;
   height: 50px;
 }
 [data-editor-hint] {
-  width: 15%;
+  width: 20%;
   margin-top: 0;
   font-size: large;
   font-weight: bold;

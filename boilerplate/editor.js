@@ -34,7 +34,9 @@ customElements.define(
       <pre><code data-editor-input contenteditable spellcheck="false">${code}</code></pre>
       <div>
         <button data-editor-execute>Execute!</button>
-        <button data-editor-hint ${!codeHint ? "disabled" : ""}>Hint?</button>
+        <button data-editor-hint ${
+          !codeHint ? "disabled" : ""
+        }>Solution?</button>
       </div>
       <b>Result</b>
       <pre data-editor-result></pre>
