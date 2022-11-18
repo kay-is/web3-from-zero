@@ -155,16 +155,20 @@
 </code-editor>
 
 <blockquote>
-  You shouldn't copy your private keys around and save them in an insecure way, but since a
-  development key doesn't have any tokens, it's not a problem if it gets stolen. Just create a new
-  one and delete the old one if that happens.
+  <b>Note:</b> You shouldn't copy your private keys around and save them in an insecure way, but
+  since a development key doesn't have any tokens, it's not a problem if it gets stolen. Just create
+  a new one and delete the old one if that happens.
 </blockquote>
 
 <h2>Using a Development Key</h2>
 
 <p>
-  To get some exercise going, let's use that key! Try to construct a new <code>Wallet</code> object,
-  pass it your copied private key from above, and print the public key it generates.
+  Let's use that key! Try to construct a new <code>Wallet</code> object, pass it your copied private
+  key from above, and print the public key and address it generates. 
+</p>
+
+<p>
+  Also, copy the address, so you have it handy for the later lessons.
 </p>
 
 <code-editor>
@@ -173,13 +177,59 @@
 const wallet = new ethers.Wallet(
   "0x350690562a6c31051d2c9f085e0b91be0a4ac0a3c206998c89ff3cfedf3524d0"
 )
+
 print(wallet.publicKey)
+print(wallet.address)
+</p>
+</code-editor>
+
+<h2>Connecting a Wallet with a Provider</h2>
+
+<p>
+  Now, that you can create wallets from an existing private key, let's try to connect a wallet to a
+  provider.
+</p>
+
+<p>
+  To establish a connection the wallet object offers a <code>connect</code> method which will create
+  a new wallet that is connected to the provider.
+</p>
+
+<p>
+  Try to create a connected wallet and use it's <code>getGasPrice</code> method to check if the 
+  connection works. Keep in mind that this method is asynchronous, and the price will be a
+  <code>BigNum</code> object.
+</p>
+
+<code-editor>
+// Write your code here!
+<p>
+const wallet = new ethers.Wallet(
+  "0x350690562a6c31051d2c9f085e0b91be0a4ac0a3c206998c89ff3cfedf3524d0"
+)
+
+const connectedWallet = wallet.connect(ethers.getDefaultProvider())
+
+const gasPrice = await connectedWallet.getGasPrice()
+
+print(ethers.utils.formatEther(gasPrice) + " ETH")
 </p>
 </code-editor>
 
 <h2>Summary</h2>
 
 <p>
-  In this lesson, we learned about different types of wallets, and that we can use a programmatic 
-  wallet for development. This way, we don't have to install any additional software. 
+  In this lesson, you learned about different types of wallets, and that you can use a programmatic 
+  wallet for development. This way, you don't have to install any additional software. 
+</p>
+
+<p>
+  You also learned how to connect a wallet with a provider, which will be important for the
+  following lessons. As I said before, you need a wallet to send transactions to a blockchain
+  network.
+</p>
+
+<p>
+  In <a href="09-test-networks.html">the next lesson</a>, you will learn about test networks and how
+  to request test tokens from token faucets.
 </p>
