@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+
+<link rel="stylesheet" href="boilerplate/style.css" />
+<script type="module" src="boilerplate/editor.js"></script>
+
+<title>Web3 From Zero - Lesson 9</title>
+
+<h1>9. Test Networks</h1>
+
+<p>
+  Building software requires you to test before you release. The usual development process goes from
+  running things on your local computer, to running it on a test system, to running it on the
+  production system.
+</p>
+
+<p>
+  This process also holds true for Web3 development. You install a local blockchain network on your
+  own machine to test the basic functionality of your smart contracts and later you deploy the
+  system onto a test network, to make sure it still works togeher with many other smart contracts
+  you might use in your application.
+</p>
+
+<p>
+  Test networks enable testing on real infrastructure without spending real tokens, and in turn,
+  real money. A TX on the Ethereum network can easily cost $10, so when you're just testing and
+  sending hundreds of TXS a day, this can get costly quick! With free test tokens that's not an
+  issue anymore.
+</p>
+
+<p>
+  Also, if you accidentally push a development key to a public repository, you won't lose anything 
+  but the worthless test tokens you put on that address.
+</p>
+
+<p>
+  This is why you had to copy a private key in the previous lesson. You need an address you can
+  reuse so you can get tokens on it and spend them for gas or to do transactions that require
+  payment.
+</p>
+
+<blockquote>
+  <b>Note:</b> We will go into the details of gas costs later. This lesson is just about connecting
+  to a test network and getting our first tokens!
+</blockquote>
+
+<h2>Connecting to a Test Network</h2>
+
+<p>
+  In Part I of this course, you learned how to use providers to connect to a blockchain network. You 
+  simply called the <code>ethers.getDefaultProvider</code> method and got a provider to read data
+  from the chain. 
+</p>
+
+<p>
+  The default provider connects, by default, to the Ethereum main network. Which is the production 
+  environment of Ethereum. If you want to connect to a test network, you have to use the first
+  parameter of that method. In our case it will be <code>"goerli"</code>.
+</p>
+
+<blockquote>
+  <b>Note:</b> Görli is one of Ethereum test networks, Ethers.js knows about it, so we can simply
+  use the name. For other networks that are compatible with Ethers.js, you need more configuration.
+</blockquote>
+
+<p>
+  The code is similar to the last lesson, but this time, I want you to call <code>getChainId</code>
+  to ensure you're connected to the test network. The correct ID is <code>5</code>.
+</p>
+
+<code-editor>
+// Write your code here!
+
+<p>
+const wallet = new ethers.Wallet(
+  "0x350690562a6c31051d2c9f085e0b91be0a4ac0a3c206998c89ff3cfedf3524d0"
+)
+
+const provider = ethers.getDefaultProvider("goerli")
+
+const connectedWallet = wallet.connect(provider)
+
+const chainId = await connectedWallet.getChainId()
+
+print(chainId)
+</p>
+</code-editor>
+
+<h2>Getting Test Tokens</h2>
+
+<p>
+  Now that you know how to connect to a test network, we will go back to the question why I asked 
+  you to copy a private key and address.
+</p>
+
+<p>
+  On blockchain networks you have to pay for writing actions, which means sending transactions. If 
+  you send an TX from an address that doesn't own enough of the networks native token, your TX won't 
+  get executed. So, if you create random private keys for development all the time, they will never
+  have any tokens to pay for anything. 
+</p>
+
+<p>
+  To fix this, you create one or more private key for development, load them up with tokens, and 
+  use them to pay for your TXS. While you have to buy tokens on the main network, you can get them
+  for free from a token faucet.
+</p>
+
+<p>
+  A faucet is a website, where you enter the address of your development account, and it will send
+  you test network tokens for free.
+</p>
+
+<p>
+  Choose one of the following faucets to request test tokens for the address that belongs to the 
+  private key you copied in the last lesson.
+</p>
+
+<ul>
+  <li>
+    The <a href="https://goerlifaucet.com/" target="_blank">Alchemy Faucet</a> requires a (free)
+    Alchemy account
+  </li>
+  <li>
+    The <a href="https://faucet.paradigm.xyz/" target="_blank">Paradigm Faucet</a> requires a
+    Twitter account
+  </li>
+</ul>
+
+<p>
+  If your choosen faucet accepted your request, you want to check out if it worked and you got your 
+  tokens. You can do this in multiple ways. One is to go on
+  <a href="https://goerli.etherscan.io/" target="_blank">Etherscan</a>, a blockchain explorer,
+  enter the address you used in the faucet and search for it. 
+</p>
+
+<blockquote>
+  <b>Note:</b> Etherscan is a search engine for addresses. Everything on-chain is public and you can
+  browse it freely.
+</blockquote>
+
+<p>
+  The second way is to check the balance programmatically with Ethers.js. So, try it yourself. 
+  Connect to the Görli testnet, and call the <code>getBalance</code> method on your wallet. It is 
+  asynchronous and returns a <code>BigNum</code>.
+</p>
+
+<code-editor>
+// Write your code here!
+<p>
+const wallet = new ethers.Wallet(
+  "0x350690562a6c31051d2c9f085e0b91be0a4ac0a3c206998c89ff3cfedf3524d0"
+)
+
+const provider = ethers.getDefaultProvider("goerli")
+
+const connectedWallet = wallet.connect(provider)
+
+const balance = await connectedWallet.getBalance()
+
+print(`${connectedWallet.address} owns ${ethers.utils.formatEther(balance)} ETH`)
+</p>
+</code-editor>
+
+<p>
+  If everything went correctly, the balance of your address should be higher than <code>0</code>. 
+</p>
+
+<h2>Summary</h2>
+
+<p>
+  In this lesson you learned what tests networks are and how they fit inside your development 
+  processes. Main networks are the production environment of blockchain networks, and test networks
+  are, well, the test environments.
+</p>
+
+<p>
+  You also learned that these test networks come with their own test tokens and how to request them 
+  from one of the multiple faucets out there.
+</p>
