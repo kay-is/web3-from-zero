@@ -28,10 +28,11 @@
 </p>
 
 <p>
-  The same is true for Web3. If you don't have a crypto-wallet, you need an HTTP API to connect to a
-  blockchain network because these networks use a protocol your browser doesn't understand. This API
-  is called a gateway. This gateway accepts requests from a browser over HTTP and leads them to a
-  blockchain network. You can only read data from the blockchain with this connection method. 
+  The same is true for Web3. If you don't have a crypto-wallet, <b>you need an HTTP API to connect
+  to a blockchain network</b> because these networks use a protocol your browser doesn't understand.
+  This API is called an remote procedure call endpoint, or <b>RPC</b> for short. This RPC accepts
+  requests from a browser over HTTP and leads them to a blockchain network. You can only read data
+  from the blockchain with this connection method. 
 </p>
 
 <p>
@@ -42,8 +43,9 @@
 </p>
 
 <p>
-  If you installed a crypto-wallet and set up the browser extension, it will connect to the
-  blockchain network over a gateway, so the browser doesn't have to use the gateway directly.
+  If you installed a crypto-wallet browser extension, it will connect to the blockchain network over
+  an RPC, so the browser doesn't have to use the RPC directly. It will also take care of tasks like 
+  signing, and key management.
 </p>
 
 <p>
@@ -54,20 +56,19 @@
 <figure>
   <img src="images/blockchain-connection.png" />
   <figcaption>
-    Figure 1: Web2 and Web3 backends
+    Figure 1: Web2 and Web3 "backends"
   </figcaption>
 </figure>
 
 <p>
-  In this course, you will start with the read-only connection methods. You don't have to install
-  anything for the first few lessons!
+  In this course, you will start with the read-only connection methods.
 </p>
 
 <h2>You Will Use Ethers.js</h2>
 
 <p>
   <a href="https://docs.ethers.io/v5/">Ethers.js</a> is software that helps with connecting to the
-  Ethereum network. You don't have to care if you connect directly over a gateway or use a browser
+  Ethereum network. You don't have to care if you connect directly over a RPC or use a browser
   extension when using Ethers.js. After you start any connection, the functions you call are the same.
 </p>
 
@@ -93,7 +94,7 @@ import {ethers} from "//unpkg.com/ethers@5.5.1/dist/ethers.esm.min.js
 
 <p>
   You have to create a provider object to connect to the Ethereum network. Providers are the
-  abstraction Ethers.js uses to normalize gateway use with wallet and HTTP gateway.
+  abstraction Ethers.js uses to normalize RPC use.
 </p>
 
 <p>
@@ -145,16 +146,17 @@ print(block)
 </p>
 
 <p>
-  Ethers.js comes pre-configured with a shared gateway you can use for free to read data from the
-  blockchain. This gateway has a request limit, so it can happen that you don't get a response if
-  you send too many requests. But for this course, it should be enough.
+  Ethers.js comes pre-configured with a shared RPC you can use for free to read data from the
+  blockchain. This RPC has a request limit, so it can happen that you don't get a response if you
+  send too many requests. But for this course, it should be enough.
 </p>
 
 <h2>What did You Learn?</h2>
 
 <p>
   In this lesson, you learned how Web2 and Web3 backends are different, while both use HTTP APIs.
-  We call these APIs gateways in Web3 because they are the gateway into the blockchain network.
+  We call these APIs RPCs in Web3 because they allow us to remotely call procedures of a blockchain
+  network.
 </p>
 
 <p>

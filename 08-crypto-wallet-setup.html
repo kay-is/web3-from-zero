@@ -8,9 +8,9 @@
 <h1>8. Crypto Wallet Setup</h1>
 
 <p>
-  So, we know how public key cryptography works, even if just in essence. And we know that a EOA is 
-  a blockchain address that is controlled by the holder of a related public/private key pair. But 
-  how come crypto wallets into play?
+  We know how public key cryptography works, even if just in essence. We know that a EOA is a
+  blockchain address that is controlled by the holder of a related public/private key pair. But how
+  come crypto wallets into play?
 </p>
 
 <h2>What is a Crypto Wallet?</h2>
@@ -40,8 +40,7 @@
 <p>
   MetaMask is probably the most popular wallet app for the Ethereum network. You can enter your keys
   into it, or even let it generate keys for your with a seed phrase. It allows you to add and remove
-  HTTP gateways for different chains, and comes preconfigured with Ethereum mainnet and it's test 
-  networks.
+  RPCs for different chains, and comes preconfigured with Ethereum mainnet and it's test networks.
 </p>
 
 <p>
@@ -54,13 +53,13 @@
 
 <p>
   A paper wallet is simply a piece of paper with all your keys, addresses, or your seed phrase
-  written down. It can't do much, since it's no software, but at least you don't have to remember 
+  written down. It can't do much, since it's not software, but at least you don't have to remember 
   all this information on your own. 
 </p>
 
 <p>
   With a paper wallet you can't send any tokens, but if you tell people one of the addresses you 
-  written on it, you can at least receive assets.
+  written on it, you can at least receive them.
 </p>
 
 <p>
@@ -83,19 +82,26 @@
   them as an extension of a wallet app that makes it more secure.
 </p>
 
-
 <h3>4. Programmatic Wallet</h3>
 
 <p>
   Since all these digital wallets talk to each other and DApps via standardized interfaces, it might
-  not come as a surprise that there is an API for this. Ethers.js has the concept of Signers, which 
-  are an abstraction over different account types. One of them is <code>Wallet</code>.
+  not come as a surprise that there is an API for this.
 </p>
 
 <p>
-  <code>Wallet</code> is a class you can create an object from that works directly with a gateway.
-  This way you can actually write something on the blockchain without installing some additional 
-  software!
+  What a software library is to an app, is a programmatic wallet to an wallet app. It's just a piece 
+  of software that is controlled with code; no UI, no CLI, just code.
+</p>
+
+<p>
+  Ethers.js offers such a programmatic wallet with its concepts of Singers, which are an abstraction
+  over different account types. One of them is <code>Wallet</code>.
+</p>
+
+<p>
+  <code>Wallet</code> is a class you can create an object from that works directly with an RPC. This
+  way you can actually write something on the blockchain without installing additional software!
 </p>
 
 <h2>Recap of the Blockchain Network Connection</h2>
@@ -108,7 +114,7 @@
 
 <p>
   The blockchain connection with wallet part of the image shows that the wallet handles the 
-  connection to the gateway, and the browser doesn't know anything about it.
+  connection to the RPC, and the browser doesn't know anything about it.
 </p>
 
 <figure>
@@ -119,26 +125,23 @@
 </figure>
 
 <p>
-  As you just learned, Ethers.js can work as a wallet too! So, we can connect to a gateway with Ethers.js and also use it to sign transactions, which are the
-  mechanism to write on the blockchain.
+  As you just learned, Ethers.js can work as a wallet too! So, we can connect to a RPC with
+  Ethers.js and also use it to sign transactions, which are the mechanism to write on the
+  blockchain.
 </p>
 
 <h2>Creating a Development Key</h2>
 
 <p>
   If you're developing with a blockchain, never use private keys that control addresses with your 
-  personal assets on it!
-</p>
-
-<p>
-  Create one or more development keys, via a seed phrase or the random key generator of 
-  Ethers.js. 
+  personal assets on it! Create one or more development keys, via a seed phrase or the random key
+  generator of Ethers.js. 
 </p>
 
 <p>
   If you have to do transactions in development that require tokens, be it for deployments or simply 
-  to test your code on testnets, you need to save the keys somewhere for later use. If you don't 
-  need any tokens for an action, you can just take a new random <code>Wallet</code> every time.
+  to test your code, you need to save the keys somewhere for later use. If you don't need any tokens
+  for an action, you can just take a new random <code>Wallet</code> every time. 
 </p>
 
 <p>
@@ -157,20 +160,26 @@
   one and delete the old one if that happens.
 </blockquote>
 
-<h2>Connecting to a Testnet</h2>
+<h2>Using a Development Key</h2>
 
 <p>
-  Testnets are blockchain networks that don't use secure consensus algorithms like proof-of-work, or
-  proof-of-stake. Otherwise, they have the same APIs and allow all the interactions of mainnet, the 
-  <b>real</b> blockchain network of Ethereum.
+  To get some exercise going, let's use that key! Try to construct a new <code>Wallet</code> object,
+  pass it your copied private key from above, and print the public key it generates.
 </p>
 
+<code-editor>
+// Write your code here!
 <p>
-  This means, all testnet tokens are worthless and you can get them via faucets. These are websites 
-  where you enter an address and they will send you tokens.
+const wallet = new ethers.Wallet(
+  "0x350690562a6c31051d2c9f085e0b91be0a4ac0a3c206998c89ff3cfedf3524d0"
+)
+print(wallet.publicKey)
 </p>
+</code-editor>
+
+<h2>Summary</h2>
 
 <p>
-  This is why you had to copy a private key in the example above. You need an address you can reuse 
-  so you can get tokens on it and spend them for gas or to do transactions that require payment.
+  In this lesson, we learned about different types of wallets, and that we can use a programmatic 
+  wallet for development. This way, we don't have to install any additional software. 
 </p>
