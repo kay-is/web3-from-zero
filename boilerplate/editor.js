@@ -2,6 +2,14 @@ import { ethers } from "//unpkg.com/ethers@5.5.1/dist/ethers.esm.min.js"
 
 window.ethers = ethers
 
+document.addEventListener("copy", (e) => {
+  const text_only = document.getSelection().toString()
+  const clipdata = e.clipboardData || window.clipboardData
+  clipdata.setData("text/plain", text_only)
+  clipdata.setData("text/html", text_only)
+  e.preventDefault()
+})
+
 const clearHtmlCode = (code) =>
   code
     .trim()
